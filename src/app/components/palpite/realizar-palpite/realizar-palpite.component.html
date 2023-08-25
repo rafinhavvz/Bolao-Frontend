@@ -1,0 +1,152 @@
+<div class="container">
+    <div class="container-banner">
+        <div class="banner" [ngStyle]="{'background-image': bolao ? 'url(' + bolao.logo + ')' : 'none'}" >
+            <button class="btn-s" routerLink="">
+                <span class="material-symbols-outlined">arrow_back_ios</span>
+            </button>
+            <h4>FAÇA SEU</h4>
+            <h1>{{id}}</h1>
+        </div>
+    </div>
+
+    <div class="row pb-5">
+        <div class="col-lg-7 col-md-12 col-sm-12 col-12 ">
+            <div class="card-palpite pt-2 " *ngFor="let time of partida;let i = index">
+                <div class="card-palpite-p">
+                    <div class="card-palpite-data"><span>{{ time.data}}</span></div>
+                    <div class="d-flex" style="height: calc(100% - 24px);">
+                        <div class="card-teams col-lg-7 col-md-6 col-sm-6 col-5">
+                            <div class="card-team">
+                                <img src="{{time.timeHomeLogo}}" alt="" style="width: 20px; height: 20px;">
+                                <span>{{time.timeHomeName}}</span>
+                            </div>
+                            <div class="card-team">
+                                <img src="{{time.timeAwayLogo}}" alt="" style="width: 20px; height: 20px;">
+                                <span>{{time.timeAwayName}}</span>
+                            </div>
+                        </div>
+                        <div class="card-bet col-lg-5 col-md-6 col-sm-6 col-7" role="presentation">
+                            <button  [ngStyle]="botaoAtivoIndex[i] === 0 ? { 'background-color': '#044793', 'color': 'white' } : {}"  (click)="apostaTeam(time.timeHomeName, i, 0)">1</button>
+                            <button  [ngStyle]="botaoAtivoIndex[i] === 1 ? { 'background-color': '#044793', 'color': 'white' } : {}" (click)="apostaTeam('Empate', i, 1)">X</button>
+                            <button  [ngStyle]="botaoAtivoIndex[i] === 2 ? { 'background-color': '#044793', 'color': 'white' } : {}" (click)="apostaTeam(time.timeAwayName, i, 2)">2</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-info col-lg-5 col-md-12 col-sm-12 col-12 pt-2">
+            <div class="card-palpite-p">
+                <div class="card-palpite-data">
+                    <span>Rodada {{bolao.round}}</span>
+                    <span>{{bolao.dataInicio | date:'dd/MM'}} até {{bolao.dataFim | date:'dd/MM'}}</span>
+                </div>
+                <div class="card-informe">
+                    <span class="title">{{bolao.name}}</span>
+                    <br />
+                    <span class="title-seg">{{bolao.idTipo}}</span>
+                    <div class="linha"></div>
+                    <div class="card-price d-flex">
+                        <div class="d-flex" style="flex-direction: column;"><span class="title-p">Valor</span><span
+                                class="title-s"> {{bolao.valor  | currency:'BRL'}}</span></div>
+                        <div class="d-flex" style="flex-direction: column;"><span class="title-p">Prêmio
+                                Atual</span><span class="title-s">{{bolao.premio  | currency:'BRL'}}</span></div>
+                        <div class="d-flex" style="flex-direction: column;"><span class="title-p">Acumulado</span><span
+                                class="title-s">{{ bolao.acumulado  | currency:'BRL'}}</span></div>
+
+                    </div>
+                </div>
+                <div class="card-palpite-nav col-md-12">
+                    <ul class="nav nav-underline" id="myTab" role="tablist">
+                        <li class="col-4" role="presentation">
+                            <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                                aria-selected="true">Seu Cupom</button>
+                        </li>
+                        <li class="col-4" role="presentation">
+                            <button class="nav-link w-100" id="lista-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                aria-controls="profile-tab-pane" aria-selected="false">Lista de Cupons</button>
+                        </li>
+                        <li class="col-4" role="presentation">
+                            <button class="nav-link w-100 " id="contact-tab" data-bs-toggle="tab"
+                                data-bs-target="#contact-tab-pane" type="button" role="tab"
+                                aria-controls="contact-tab-pane" aria-selected="false">Relatório do Acumulado</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="mt-2 tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                            aria-labelledby="home-tab" tabindex="0">
+                            <h6>Seu Cupom</h6>
+                            <div class="timeno text-center" *ngIf="timeSelecionado.length == 0">
+                                <h6>NUNHUMA PARTIDA SELECIONADA</h6>
+                            </div>
+                            <div *ngFor="let selec of timeSelecionado; let i = index">
+                                <div class="seltime">
+                                    {{selec.home}} x {{selec.fora}}
+                                </div>
+                                <div class="resulttime">
+                                    {{selec.resultado}}
+                                    <button (click)="retirarTime(selec,i)"> <span
+                                            class="material-symbols-outlined">close</span></button>
+                                </div>
+                            </div>
+                            <div class="bet-input row mt-4"  *ngIf="timeSelecionado.length > 0">
+                                <div class="input-grup col-lg-3 col-md-3 col-sm-3 col-3">
+                                    <label for="">Cupons</label>
+                                    <div class="input-number"> 
+                                        <input class="input-cupom" type="number" min=0
+                                            [(ngModel)]="apostaFinal.qtdCupom" (ngModelChange)="digiteValor()">
+                                        <div class="input-seta">
+                                            <button (click)="incrementarValor()" class="a">
+                                                <span class="material-symbols-outlined">
+                                                    expand_less
+                                                </span>
+                                            </button>
+                                            <button (click)="decrementarValor()" class="b">
+                                                <span class="material-symbols-outlined">
+                                                    expand_more
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="input-grup col-lg-4 col-md-4 col-sm-4 col-4">
+                                    <label>Valor Total</label>
+                                    <div class="input-number" aria-disabled="true" >
+                                        <input class="input-cupom-text" disabled="true"  mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" [dropSpecialCharacters]="true" [(ngModel)]="apostaFinal.valorTotal" type="text">
+                                        <h6>R$</h6>
+                                    </div>
+                                    
+                                </div>
+                                <div class="input-grup col-lg-5 col-md-5 col-sm-5 col-5">
+                                    <label>Prêmio a Seguir </label>
+                                    <div class="input-number" aria-disabled="true">
+                                            <input class="input-cupom-text"  disabled="true" mask="separator.2"  mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" [dropSpecialCharacters]="true"  [(ngModel)]="apostaFinal.premioExtra" type="text">
+                                        <h6>R$</h6>
+                                    </div>
+                                </div>
+                                
+                                
+
+                            </div>
+                            <div class="btn-bet mt-2"  *ngIf="timeSelecionado.length > 0">
+                                <button class="btn-p" (click)="finalizarBet(timeSelecionado,apostaFinal)" >PARTICIPAR</button>
+                                <button class="btn-s" (click)="limparTimes()">
+                                   LIMPAR
+                                </button>
+                            
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="lista-tab"
+                            tabindex="0"><app-relatorio-cupons [BolaoItem]="bolao"></app-relatorio-cupons></div>
+                        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                            tabindex="0"><app-relatorio-acumulado [BolaoItem]="bolao"></app-relatorio-acumulado></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

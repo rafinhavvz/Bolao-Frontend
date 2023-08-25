@@ -1,0 +1,44 @@
+.spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    justify-content: space-around;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    background-color: #00439C;
+    color: white;
+  }
+
+  .toolbar span {
+    font-family: Krona One !important;
+    font-size: 30px;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .toolbar button {
+      color: #AE7927;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 400;
+      padding: 8px 22px;
+      line-height: normal;
+      font-family: Krona One !important;
+      cursor: pointer;
+      border-radius: 8px;
+      background: linear-gradient(150deg, #FFDF41 0%, #FFC818 100%);
+      box-shadow: 4px 4px 0px 0px #815815;
+  }
+  .toolbar button:hover {
+   // color: #f7b80a;    
+    background: linear-gradient(0deg, #FFDF41 0%, #FFC818 100%);
+    box-shadow: 3px 3px 0px 0px #AB7726;
+}

@@ -1,0 +1,38 @@
+.progress{
+    --bs-progress-height: 7px;
+    .progress-bar {
+        background-color: #039E00 ;
+        background-position: center;
+    }
+    .progress-bar-animated {
+        animation: 4s linear infinite progress-bar-stripes;
+    }
+}
+
+.card-span Span{
+    font-size: small;
+    font-weight: 500;
+   
+}
+.verde{
+    color: #168E15;
+}
+
+.btn-s {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    width: 36px;
+    height: 36px;
+    background-color: #123052;
+    color: white;
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48
+    }
+
+}

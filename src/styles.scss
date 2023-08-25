@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@import './config-scss/reset.scss';
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css");
+@import './config-scss/animation.scss';
+
+
+:root{
+    --branco-color:#fff;
+    --cinza-color: #E7E7E7;
+    --cinza-color--700: #636363;
+    --background-color:#fff;
+    --segundaria-color:#DEEFE7;
+    --text-segundaria-color:#044793;
+}
+
+@function rem-calc($size){
+    $value:calc($size / 16);
+    @return #{$value}rem;
+}
+
+html{
+    font-family: 'Montserrat', sans-serif !important;
+    background-color: var(--background-color);
+}
+
+
+main{
+    
+    max-width: rem-calc(600);
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 8px 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  body::-webkit-scrollbar {
+    width: 5px;               /* width of the entire scrollbar */
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: #E7E7E7;        /* color of the tracking area */
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color: #00439C;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 1px solid #E7E7E7;  /* creates padding around scroll thumb */
+  }
+
+  

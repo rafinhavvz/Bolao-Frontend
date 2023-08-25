@@ -1,0 +1,17 @@
+<div class="container">
+    <div>
+        <h2>Buscar Times</h2>
+        <input type="text" [(ngModel)]="pesquisaTeam" placeholder="Digite o nome do time">
+       <button  (click)="pesquisaTeams()">PESQUISAR</button>
+        <ul>
+          <li *ngFor="let team of teams">
+            <img [src]="'https://media.api-sports.io/football/teams/' + team.team.id + '.png'" alt="{{ team.team.name }}" width="50">
+            {{ team.team.name }}
+            <button (click)="salvaEscudo()">salvar</button>
+          </li>
+        </ul>
+      </div>
+
+
+
+</div>

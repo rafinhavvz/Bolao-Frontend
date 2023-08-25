@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="container-btn">
+        <button routerLink="gerenciartimes">CRIAR TIME</button>
+        <button routerLink="gerenciarboloes">CRIAR BOLOES</button>
+    </div>
+    <div class="container-banner">
+        <div class="banner">
+            <h4>FAÇA SEU</h4>
+            <h1>BOLÃO</h1>
+        </div>
+    </div>
+    <div class="header rows mt-3 ">
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 p-1" *ngFor="let bolao of boloes">
+        <div class="card ">
+            <div class="card-data">
+                <div class="card-banner">
+                    <img src="{{bolao.logo}}"
+                        alt="">
+                </div>
+                <div class="card-info">
+                    <span>Rodada {{bolao.round}}</span>
+                <span>{{bolao.dataInicio | date:'dd/MM'}} até {{bolao.dataFim | date:'dd/MM'}}</span> 
+                </div>                                
+                </div>
+                <div class="card-informe">
+                    <span class="title">{{bolao.name}}</span>
+                    <br/>
+                    <span class="title-seg">{{bolao.idTipo}}</span>
+                    <div class="linha"></div>
+                    <div class="card-price d-flex">
+                        <div class="d-flex" style="flex-direction: column;"><span class="title-p">Valor</span><span class="title-s">{{bolao.valor | currency:'BRL'}}</span></div>
+                        <div class="d-flex" style="flex-direction: column;"><span class="title-p">Prêmio Atual</span><span class="title-s"> {{bolao.premio | currency:'BRL'}}</span></div>
+                        <div class="d-flex" style="flex-direction: column;"><span class="title-p">Acumulado</span><span class="title-s">{{bolao.acumulado | currency:'BRL'}}</span></div>
+                    
+                    </div>
+                    <div class="card-btn">
+                        <button class="btn-p" [routerLink]="['/bolao', bolao.id]">PARTICIPAR</button>
+                        <button class="btn-s">
+                            <span class="material-symbols-outlined">info</span>
+                        </button>
+                    </div>
+                </div>                
+        </div>
+    </div>
+</div>
+
+
+
+</div>

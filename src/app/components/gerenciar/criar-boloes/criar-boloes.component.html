@@ -1,0 +1,186 @@
+<div class="container-bolao  row mt-5">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+        <div class="container-img">
+            <div class="container-desktop"></div>
+        </div>
+        <p style=" font-size: 10.3px;"> Dimensões de 2.560 px por 1.440 px. A área vermelha é a area de segurança.</p>
+    </div>
+
+    <div class="container-info col-lg-8 col-md-8 col-sm-12 col-12">
+        <div class="row">
+            <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
+                <label>Nome do Bolão</label>
+                <div class="input-number" aria-disabled="true">
+                    <input class="input-cupom-text" type="text">
+                </div>
+            </div>
+            <div class="input-grup col-lg-3 col-md-6 col-sm-6 col-6">
+                <label>Data Inicio</label>
+                <div class="input-number" aria-disabled="true">
+                    <div class="input-cupom-text d-flex" style="align-items: center;">{{oDataInicio |date:'dd/MM/yyyy'}}</div>
+                    <!-- <input class="input-cupom-text" disabled="true" type="date" [(ngModel)]="oDataInicio"> -->
+                </div>
+            </div>
+            <div class="input-grup col-lg-3 col-md-6 col-sm-6 col-6">
+                <label>Data fim</label>
+                <div class="input-number" aria-disabled="true">
+                    <div class="input-cupom-text d-flex"  style="align-items: center;">{{oDataFim | date:'dd/MM/yyyy'}}</div>
+                    <!-- <input class="input-cupom-text" disabled="true" type="date" [(ngModel)]="oDataInicio"> -->
+                </div>
+            </div>
+            <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
+                <label>Competição</label>
+                <div class="input-number" aria-disabled="true">
+                    <select class="input-cupom-text" name="select">
+                        <option disabled selected></option>
+                        <option *ngFor="let campeonato of campeonatos" [value]="campeonato.id">
+                            {{ campeonato.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-grup col-lg-3 col-md-6 col-sm-6 col-6">
+                <label>Valor</label>
+                <div class="input-number" aria-disabled="true">
+                    <input class="input-cupom-text text-end" mask="separator.2" [thousandSeparator]="'.'"
+                        [decimalMarker]="','" [dropSpecialCharacters]="true" type="text">
+                    <h6>R$</h6>
+                </div>
+            </div>
+            <div class="input-grup col-lg-3 col-md-6 col-sm-6 col-6">
+                <label>Acumulado inicial</label>
+                <div class="input-number" aria-disabled="true">
+                    <input class="input-cupom-text text-end" mask="separator.2" [thousandSeparator]="'.'"
+                        [decimalMarker]="','" [dropSpecialCharacters]="true" type="text">
+                    <h6>R$</h6>
+                </div>
+            </div>
+            <div>
+                <p style=" font-size: 10.3px;">O prêmio inicia R$ 0,00. A cada aposta, 50% vai para o prêmio, atraindo
+                    os participantes, enquanto 20% alimentam o acumulado, garantindo crescimento constante. Os restantes
+                    30% são para
+                    manutenção e operação do site, assegurando qualidade e disponibilidade.
+                    <br>
+                    Essa distribuição equilibrada mantém o bolão atrativo, justo e emocionante para todos.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-partida col-lg-7 col-md-7 col-sm-12 col-12">
+        <div class="row">
+            <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
+                <label>Time da Casa</label>
+                <div class="input-number" aria-disabled="true">
+                    <select class="input-cupom-text" style="padding: 0px 24px;" name="select" [(ngModel)]="tHome"
+                        (ngModelChange)="atualizarImagem($event, 'HOME')">
+                        <option disabled selected></option>
+                        <option *ngFor="let time of times" [value]="time.id">
+                            {{ time.name }}
+                        </option>
+                    </select>
+                    <img src="{{oLogoHome}}" style="position: absolute;
+                    width: 19px;
+                    left: 5px;" alt="">
+                </div>
+            </div>
+
+            <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
+                <label>Time de Fora</label>
+                <div class="input-number" aria-disabled="true">
+                    <select class="input-cupom-text" style="padding: 0px 24px;" name="select" [(ngModel)]="tAway"
+                        (ngModelChange)="atualizarImagem($event, 'AWAY')">
+                        <option disabled selected></option>
+                        <option *ngFor="let time of times" [value]="time.id">
+                            {{ time.name }}
+                        </option>
+                    </select>
+                    <img src="{{oLogoAway}}" style="position: absolute;
+                    width: 19px;
+                    left: 5px;" alt="">
+                </div>
+            </div>
+
+
+
+            <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
+                <label>Data do Evento</label>
+                <div class="input-number" aria-disabled="true">
+                    <input class="input-cupom-text" type="datetime-local" [(ngModel)]="dataHora">
+                </div>
+            </div>
+            <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12"
+                style="display: flex; justify-content: flex-end;">
+                <button style="
+                width: 100%;
+                border-radius: 9px;
+                background: #00439c;
+                color: white;
+                display: flex;
+                padding: 0px 14px;
+                font-size: medium;
+                font-weight: 500;
+                width: 100%;
+                height: 36px;
+                align-items: center;
+                justify-content: center;
+            " (click)="adicionarPartida(tHome,tAway, dataHora)">ADICIONAR<span class="material-symbols-outlined">
+                        add
+                    </span></button>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="container-partidas d-flex mb-2" 
+                    *ngFor="let item of prePartida">
+                    <div class="d-flex" style="    align-items: center;">
+                        <div class="text-center" style="    width: 73px;
+                        height: 100%;
+                        border-right: 1px solid #aaa;
+                        margin-right: 10px;">
+                            <div>{{item.dataHora | date:'dd/MM/yy'}}</div>
+                            <div>{{item.dataHora | date:'HH:mm'}}</div>
+                        </div>
+                        <div>
+                            <div>
+                                <img src="{{item.oTeamHome.logo}}" alt="" width="18" height="18">
+                                {{item.oTeamHome.name}}
+                            </div>
+                            <div>
+                                <img src="{{item.oTeamAway.logo}}" alt="" width="18" height="18">
+                                {{item.oTeamAway.name}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div><button><span class="material-symbols-outlined">
+                                close
+                            </span></button></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+        <div class="container-partida-list  row">
+            <div>
+                <div>
+
+                    <span><strong>Nome do Bolão: </strong>blablsa</span>
+                </div>
+                <div>
+                    <span><strong>Competição: </strong>blablsa</span>
+
+                </div>
+                <div>
+                    <span><strong>Valor Cupom: </strong>R$10.00</span>
+                    <span><strong>Acumulado Base: </strong>R$1000.00</span>
+                </div>
+                <div>
+                    <span><strong>Data Inicio: </strong>17/07/2023</span>
+                    <span><strong>Data Fim: </strong>17/07/2023</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

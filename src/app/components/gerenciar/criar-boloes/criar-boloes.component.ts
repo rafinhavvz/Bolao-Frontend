@@ -103,8 +103,8 @@ export class CriarBoloesComponent {
     console.log('Evento que termina por último:', ultimoEvento);
   }
 
-  removePartida(){
-    
+  removePartida(index: number) {
+    this.prePartida.splice(index, 1);
   }
   
 

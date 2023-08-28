@@ -102,8 +102,6 @@
                 </div>
             </div>
 
-
-
             <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
                 <label>Data do Evento</label>
                 <div class="input-number" aria-disabled="true">
@@ -118,12 +116,13 @@
                     ADICIONAR<span class="material-symbols-outlined">add</span>
                 </button>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
-                <h5>Partidas do Bolão</h5>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2 mb-5">
+                <h5>Partidas do Bolão {{prePartida.length}}</h5>
                 <div class="container-partidas d-flex mb-2 text-center" *ngIf="prePartida.length == 0">
                     <h6 class="w-100" style="color: #aaa; margin: 0px;">NENHUMA PARTIDA ADICIONADA</h6></div>
+                    <div class="partida-b ">
                 <div class="container-partidas d-flex mb-2" 
-                    *ngFor="let item of prePartida">
+                    *ngFor="let item of prePartida; let i = index">
                     <div class="d-flex" style="    align-items: center;">
                         <div class="text-center" style="    width: 73px;
                         height: 100%;
@@ -144,12 +143,13 @@
                         </div>
                     </div>
 
-                    <div>
-                        <button (click)="removePartida()">
+                    <div style="margin-left: 5px;"> 
+                        <button class="d-flex" (click)="removePartida(i)" style="background: transparent;">
                         <span class="material-symbols-outlined">close</span>
                         </button>
                 </div>
                 </div>
+            </div>
             </div>
 
         </div>

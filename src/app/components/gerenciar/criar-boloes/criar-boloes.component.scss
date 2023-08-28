@@ -88,4 +88,23 @@
     .btn-disabled{
         background: #394555;
     }
+    .partida-b{
+        //background: aqua;
+        max-height: 262px;
+        overflow: auto;   
+    }
 }
+
+.partida-b::-webkit-scrollbar {
+    width: 10px;               /* width of the entire scrollbar */
+  }
+  
+  .partida-b::-webkit-scrollbar-track {
+    background: white;        /* color of the tracking area */
+  }
+  
+  .partida-b::-webkit-scrollbar-thumb {
+    background-color: whitesmoke;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid white;  /* creates padding around scroll thumb */
+  }

@@ -102,6 +102,10 @@ export class CriarBoloesComponent {
     console.log('Evento que começa primeiro:', primeiroEvento);
     console.log('Evento que termina por último:', ultimoEvento);
   }
+
+  removePartida(){
+    
+  }
   
 
 }

@@ -40,6 +40,25 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
+
+  postImagem(imagem: any) {
+    return this.http.post<any>(this.baseUrl + "/Boloes/Image", imagem).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  postBolao(bolao: any) {
+    return this.http.post<any>(this.baseUrl + "/Boloes", bolao).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  postPartidas(partidas: any) {
+    console.log(partidas);
+    return this.http.post<any>(this.baseUrl + "/Partidas", partidas).pipe(
+      catchError(this.handleError)
+    );
+  }
   
   postApostasPartidas(partidas: any) {
     console.log("PASSOU",partidas)

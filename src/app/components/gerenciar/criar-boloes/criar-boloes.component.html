@@ -1,7 +1,13 @@
 <div class="container-bolao  row mt-5">
+    <form [formGroup]="bolaoForm" class="container-bolao  row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-        <div class="container-img">
+        <div class="container-img" [style.background-image]="'url(' + imagemSelecionada + ')'">
             <div class="container-desktop"></div>
+            
+        </div>
+        <div class="container-img-btn">
+            <label  for="arquivo">ADICIONAR IMAGEM</label>
+            <input type="file" name="arquivo" id="arquivo" accept="image/png, image/jpeg" (change)="onBannerSelecionado($event)">
         </div>
         <p style=" font-size: 10.3px;"> Dimensões de 2.560 px por 1.440 px. A área vermelha é a area de segurança.</p>
     </div>
@@ -11,7 +17,7 @@
             <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
                 <label>Nome do Bolão</label>
                 <div class="input-number" aria-disabled="true">
-                    <input class="input-cupom-text" type="text">
+                    <input class="input-cupom-text" type="text"  formControlName="name" name="name">
                 </div>
             </div>
             <div class="input-grup col-lg-3 col-md-6 col-sm-6 col-6">
@@ -31,9 +37,9 @@
             <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
                 <label>Competição</label>
                 <div class="input-number" aria-disabled="true">
-                    <select class="input-cupom-text" name="select">
+                    <select class="input-cupom-text" name="select"  formControlName="idCampeonato">
                         <option disabled selected></option>
-                        <option *ngFor="let campeonato of campeonatos" [value]="campeonato.id">
+                        <option *ngFor="let campeonato of campeonatos" [value]="campeonato.id" name="idCampeonato" >
                             {{ campeonato.name }}
                         </option>
                     </select>
@@ -43,7 +49,7 @@
                 <label>Valor</label>
                 <div class="input-number" aria-disabled="true">
                     <input class="input-cupom-text text-end" mask="separator.2" [thousandSeparator]="'.'"
-                        [decimalMarker]="','" [dropSpecialCharacters]="true" type="text">
+                        [decimalMarker]="','" [dropSpecialCharacters]="true" type="text" name="valor"  formControlName="valor" >
                     <h6>R$</h6>
                 </div>
             </div>
@@ -51,7 +57,7 @@
                 <label>Acumulado inicial</label>
                 <div class="input-number" aria-disabled="true">
                     <input class="input-cupom-text text-end" mask="separator.2" [thousandSeparator]="'.'"
-                        [decimalMarker]="','" [dropSpecialCharacters]="true" type="text">
+                        [decimalMarker]="','" [dropSpecialCharacters]="true" type="text" formControlName="acumuladoBase"  name="acumuladoBase" >
                     <h6>R$</h6>
                 </div>
             </div>
@@ -67,7 +73,7 @@
         </div>
 
     </div>
-
+</form>
     <div class="container-partida col-lg-7 col-md-7 col-sm-12 col-12">
         <div class="row">
             <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
@@ -159,21 +165,13 @@
         <div class="container-partida-list  row">
             <div>
                 <div>
-
-                    <span><strong>Nome do Bolão: </strong>blablsa</span>
-                </div>
-                <div>
-                    <span><strong>Competição: </strong>blablsa</span>
-
-                </div>
-                <div>
-                    <span><strong>Valor Cupom: </strong>R$10.00</span>
-                    <span><strong>Acumulado Base: </strong>R$1000.00</span>
-                </div>
-                <div>
-                    <span><strong>Data Inicio: </strong>17/07/2023</span>
-                    <span><strong>Data Fim: </strong>17/07/2023</span>
-                </div>
+                    <div>
+                        <button class="btn-add" 
+                        (click)="enviarBolao()" >
+                            CRIAR BOLÃO<span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>            
             </div>
         </div>
     </div>

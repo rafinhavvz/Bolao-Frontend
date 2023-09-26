@@ -54,14 +54,12 @@ export class ApiService {
   }
 
   postPartidas(partidas: any) {
-    console.log(partidas);
     return this.http.post<any>(this.baseUrl + "/Partidas", partidas).pipe(
       catchError(this.handleError)
     );
   }
   
   postApostasPartidas(partidas: any) {
-    console.log("PASSOU",partidas)
     return this.http.post<any>(this.baseUrl + "/ApostasPartidas", partidas).pipe(
       catchError(this.handleError)
     );
@@ -83,6 +81,12 @@ export class ApiService {
 
   getPartidasApostaId(id:number){
     return this.http.get<any>(this.baseUrl + "/ApostasPartidas/Id?oItemId="+ id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getApostaIdBolao(idBolao:number){
+    return this.http.get<any>(this.baseUrl + "/Apostas/IdBolao?oItemId="+ idBolao).pipe(
       catchError(this.handleError)
     );
   }

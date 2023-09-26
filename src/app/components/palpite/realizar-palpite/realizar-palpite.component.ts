@@ -11,13 +11,14 @@ export interface Bolao {
   dataFim: string;
   dataInicio: string;
   id: number;
-  idTipo: number;
+  idCampeonato: number;
   logo: string;
   name: string;
   premio: number;
   recuperado: number;
   round: number;
   valor: number;
+  status:string;
 }
 
 @Component({
@@ -47,13 +48,14 @@ export class RealizarPalpiteComponent {
     dataFim: '',
     dataInicio: '',
     id: 0,
-    idTipo: 0,
+    idCampeonato: 0,
     logo: '',
     name: '',
     premio: 0,
     recuperado: 0,
     round: 0,
     valor: 0,
+    status:''
   };
   partida: any[] = [];
   timeSelecionado: any[] = [];
@@ -73,17 +75,18 @@ export class RealizarPalpiteComponent {
         this.bolao = res;
 
         const premioNovo = res.premio + res.valor * 0.5;
-
         let acumuladoBase = 0;
         let acumuladoNovo = 0;
         if (res.recuperado == res.acumuladoBase) {
+          console.log("acumuladoNovo");
           acumuladoBase = res.acumulado;
           acumuladoNovo = res.acumulado + res.valor * 0.2;
         } else {
+          console.log("acumuladoNovo2");
           acumuladoBase = res.recuperado;
           acumuladoNovo = res.recuperado + res.valor * 0.2;
         }
-        console.log(acumuladoNovo);
+        
         this.apostaFinal = {
           valorBase: res.valor,
           valorTotal: res.valor,
@@ -192,8 +195,7 @@ export class RealizarPalpiteComponent {
 
       // Calcula o prêmio novo com o valor do cupom multiplicado e adiciona 50%
       const premioNovo = this.bolao.premio + valorCupomMultiplicado * 0.5;
-      const acumuladoNovo =
-        this.apostaFinal.acumuladoBase + valorCupomMultiplicado * 0.2;
+      const acumuladoNovo = this.apostaFinal.acumuladoBase + valorCupomMultiplicado * 0.2;
       this.apostaFinal.acumulado = acumuladoNovo;
 
       // Atualiza o prêmio extra com o prêmio novo calculado
@@ -241,12 +243,13 @@ export class RealizarPalpiteComponent {
       acumuladoBase: this.bolao.acumuladoBase,
       dataFim: this.bolao.dataFim,
       dataInicio: this.bolao.dataInicio,
-      idTipo: this.bolao.idTipo,
+      idCampeonato: this.bolao.idCampeonato,
       logo: this.bolao.logo,
       name: this.bolao.name,
       recuperado: this.bolao.recuperado,
       round: this.bolao.round,
       valor: this.bolao.valor,
+      status: this.bolao.status,
     };
     const acumulado = aposta.acumulado;
 
@@ -263,6 +266,7 @@ export class RealizarPalpiteComponent {
     valorGanho: 0
     }
    
+    console.log("Bolao", bolao);
     
     //Faz as chamadas de serviço em paralelo usando forkJoin
     forkJoin([
@@ -295,6 +299,7 @@ export class RealizarPalpiteComponent {
 
           this.api.postApostasPartidas(novasPartidas).subscribe(res =>{
             console.log("resposta:",res)
+            this.ngOnInit(); 
           })
 
         }),
@@ -307,7 +312,6 @@ export class RealizarPalpiteComponent {
       )
       .subscribe();
 
-   this.ngOnInit();
   }
 
   geradorLetras(): string {

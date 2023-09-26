@@ -1,0 +1,55 @@
+<div class="container col-lg-12 col-md-12 col-sm-12 col-12">
+-    <div class="row pb-5">
+        <div class="col-lg-7 col-md-12 col-sm-12 col-12 ">
+            <div class="input-grup ">
+                <label>Bolões</label>
+                <div class="input-number" aria-disabled="true">
+                    <select class="input-cupom-text" style="padding: 0px 24px;" name="select" [(ngModel)]="selectedBolaoId"
+                        (ngModelChange)="getPartidas(selectedBolaoId)">
+                        <option disabled selected></option>
+                        <option *ngFor="let bolao of boloes" [value]="bolao.id">
+                            {{ bolao.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-palpite pt-2 " *ngFor="let time of partidas;let i = index">
+                <div class="card-palpite-p">
+                    <div class="card-palpite-data"><span>{{ time.data | date:'dd/MM HH:mm' }}</span></div>
+                    <div class="d-flex" style="height: calc(100% - 24px);">
+                        <div class="card-teams col-lg-7 col-md-6 col-sm-6 col-5">
+                            <div class="card-team">
+                                <img src="{{time.timeHomeLogo}}" alt="" style="width: 20px; height: 20px;">
+                                <span>{{time.timeHomeName}}</span>
+                            </div>
+                            <div class="card-team">
+                                <img src="{{time.timeAwayLogo}}" alt="" style="width: 20px; height: 20px;">
+                                <span>{{time.timeAwayName}}</span>
+                            </div>
+                        </div>
+                        <div class="card-bet col-lg-5 col-md-6 col-sm-6 col-7" role="presentation">
+                            <button
+                                [ngStyle]="botaoAtivoIndex[i] === 0 ? { 'background-color': '#044793', 'color': 'white' } : {}"
+                                (click)="selecionarTeam(1, i, 0)">1</button>
+                            <button
+                                [ngStyle]="botaoAtivoIndex[i] === 1 ? { 'background-color': '#044793', 'color': 'white' } : {}"
+                                (click)="selecionarTeam(2, i, 1)">X</button>
+                            <button
+                                [ngStyle]="botaoAtivoIndex[i] === 2 ? { 'background-color': '#044793', 'color': 'white' } : {}"
+                                (click)="selecionarTeam(3, i, 2)">2</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-5 col-md-12 col-sm-12 col-12 ">
+            <div class="btn-bet mt-2">
+                <button class="btn-p" >VERIFICAR GANHADOR</button>
+                <button class="btn-s mt-2" >PUBLICAR RESULTADO</button>
+            </div>
+            
+        </div>
+    </div>
+</div>

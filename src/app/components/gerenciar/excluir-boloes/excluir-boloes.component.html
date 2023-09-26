@@ -1,0 +1,15 @@
+<div class="container-partida col-lg-7 col-md-7 col-sm-12 col-12">
+    <div class="row">
+        <div class="input-grup col-lg-6 col-md-12 col-sm-12 col-12">
+            <label>Bolões</label>
+            <div class="input-number" aria-disabled="true">
+                <select class="input-cupom-text" style="padding: 0px 24px;" name="select" >
+                    <option disabled selected></option>
+                    <option *ngFor="let bolao of boloes" [value]="bolao.id">
+                        {{ bolao.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,8 @@ import { RealizarPalpiteComponent } from './components/palpite/realizar-palpite/
 import { RelatorioCuponsComponent } from './components/palpite/relatorio-cupons/relatorio-cupons.component';
 import { RelatorioAcumuladoComponent } from './components/palpite/relatorio-acumulado/relatorio-acumulado.component';
 import { CriarBoloesComponent } from './components/gerenciar/criar-boloes/criar-boloes.component';
+import { ExcluirBoloesComponent } from './components/gerenciar/excluir-boloes/excluir-boloes.component';
+import { PublicarBolaoComponent } from './components/gerenciar/publicar-bolao/publicar-bolao.component';
 
 
 const maskConfig: Partial<IConfig> = {
@@ -34,6 +36,8 @@ const maskConfig: Partial<IConfig> = {
     RelatorioCuponsComponent,
     RelatorioAcumuladoComponent,
     CriarBoloesComponent,
+    ExcluirBoloesComponent,
+    PublicarBolaoComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,11 @@
 <div class="container col-lg-12 col-md-12 col-sm-12 col-12">
--    <div class="row pb-5">
+    - <div class="row pb-5">
         <div class="col-lg-7 col-md-12 col-sm-12 col-12 ">
             <div class="input-grup ">
                 <label>Bolões</label>
                 <div class="input-number" aria-disabled="true">
-                    <select class="input-cupom-text" style="padding: 0px 24px;" name="select" [(ngModel)]="selectedBolaoId"
-                        (ngModelChange)="getPartidas(selectedBolaoId)">
+                    <select class="input-cupom-text" style="padding: 0px 24px;" name="select"
+                        [(ngModel)]="selectedBolaoId" (ngModelChange)="getPartidas(selectedBolaoId)">
                         <option disabled selected></option>
                         <option *ngFor="let bolao of boloes" [value]="bolao.id">
                             {{ bolao.name }}
@@ -45,11 +45,91 @@
 
         </div>
         <div class="col-lg-5 col-md-12 col-sm-12 col-12 ">
-            <div class="btn-bet mt-2">
-                <button class="btn-p" >VERIFICAR GANHADOR</button>
-                <button class="btn-s mt-2" >PUBLICAR RESULTADO</button>
+            <div class="row">
+                <div class="col-sm-12 mb-12 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prêmio total pago:</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{premioTotalPago  | currency:'BRL'}}</h6>
+                        </div>
+                      </div>                      
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prêmio:                            </h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{premio  | currency:'BRL'}}</h6>
+                        </div>
+                      </div>                      
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Acumulado:</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{acumulado | currency:'BRL'}}</h6>
+                        </div>
+                      </div>                      
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Ganhadores:                            </h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{totalGanhadores }}</h6>
+                        </div>
+                      </div>                      
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Qtd de Acertos:</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{qtdAcertos }}</h6>
+                        </div>
+                      </div>                      
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Cupons Premiado:</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{cuponsPremiados }}</h6>
+                        </div>
+                      </div>                      
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Valor Para cada Cupom:</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{valorPorCupom | currency:'BRL'}}</h6>
+                        </div>
+                      </div>                      
+                </div>
             </div>
             
+           
+            <p>Total de cupons: {{totalCupon(apostas)}}</p>
+            <h2>Acumulado: {{acumulado}}</h2>
+            <h2>Premio: {{premio}}</h2>
+            <div *ngFor="let aposta of apostas">
+                <div class="card">
+                    <button class="card-header d-flex justify-content-between" data-bs-toggle="collapse"
+                        [attr.href]="'#multiCollapseExample' + aposta.id" role="button" aria-expanded="false"
+                        aria-controls="multiCollapseExample1">
+                       <strong>{{aposta.cupons}}</strong> <span>quantidade cupons{{aposta.qtdCupom}}</span>
+                        <span>{{calcularPartidasAcertadas(aposta)}}</span>                        
+                    </button>
+                    <div class="collapse multi-collapse" [attr.id]="'multiCollapseExample' + aposta.id">
+                        <ul class="list-group list-group-flush" >
+                            <li class="list-group-item" *ngFor="let partida of aposta.partidas"> <span
+                                    [ngClass]="{'bola-verde': partida.resultadoReal === partida.resultadoApost, 'bola-vermelha': partida.resultadoReal !== partida.resultadoApost, 'bola-cinza': partida.resultadoReal === 0}"></span>
+                                {{partida.nomeTimeHome}} vs {{partida.nomeTimeAway}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="btn-bet mt-2">
+                <button class="btn-p" (click)="verificarGanhador()">VERIFICAR GANHADOR</button>
+                <button class="btn-s mt-2">PUBLICAR RESULTADO</button>
+            </div>
         </div>
     </div>
-</div>

@@ -141,4 +141,26 @@ Label {
     .btn-p:hover {
         background-color: #2a923b;
     }
+    .bola-verde {
+        width: 10px;
+        height: 10px;
+        background-color: green;
+        border-radius: 50%; /* Para criar uma bola com bordas arredondadas */
+        display: inline-block; /* Para que a bola não quebre a linha do texto */
+      }
+      
+      .bola-vermelha {
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .bola-cinza {
+        width: 10px;
+        height: 10px;
+        background-color: rgb(150, 150, 150);
+        border-radius: 50%;
+        display: inline-block;
+      }
 }

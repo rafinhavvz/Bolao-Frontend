@@ -9,10 +9,11 @@ export interface Aposta {
     status: string;
     valorApostado: number;
     valorGanho: number;
-    partidas: partida
+    partidas: partida[]
 }
 
 export interface partida {
+    idPartida:number;
     idBolao: number;
     idTeamHome: number;
     idTeamAway: number;

@@ -13,6 +13,7 @@ export interface Aposta {
 }
 
 export interface partida {
+    id:number,
     idPartida:number;
     idBolao: number;
     idTeamHome: number;

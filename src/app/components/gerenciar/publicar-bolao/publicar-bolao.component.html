@@ -29,14 +29,14 @@
                         </div>
                         <div class="card-bet col-lg-5 col-md-6 col-sm-6 col-7" role="presentation">
                             <button
-                                [ngStyle]="botaoAtivoIndex[i] === 0 ? { 'background-color': '#044793', 'color': 'white' } : {}"
-                                (click)="selecionarTeam(1, i, 0)">1</button>
-                            <button
                                 [ngStyle]="botaoAtivoIndex[i] === 1 ? { 'background-color': '#044793', 'color': 'white' } : {}"
-                                (click)="selecionarTeam(2, i, 1)">X</button>
+                                (click)="selecionarTeam(1, i, 1)">1</button>
                             <button
                                 [ngStyle]="botaoAtivoIndex[i] === 2 ? { 'background-color': '#044793', 'color': 'white' } : {}"
-                                (click)="selecionarTeam(3, i, 2)">2</button>
+                                (click)="selecionarTeam(2, i, 2)">X</button>
+                            <button
+                                [ngStyle]="botaoAtivoIndex[i] === 3 ? { 'background-color': '#044793', 'color': 'white' } : {}"
+                                (click)="selecionarTeam(3, i, 3)">2</button>
 
                         </div>
                     </div>
@@ -129,7 +129,7 @@
 
             <div class="btn-bet mt-2">
                 <button class="btn-p" (click)="verificarGanhador()">VERIFICAR GANHADOR</button>
-                <button class="btn-s mt-2">PUBLICAR RESULTADO</button>
+                <button class="btn-s mt-2" (click)="publicarBolao()">PUBLICAR RESULTADO</button>
             </div>
         </div>
     </div>

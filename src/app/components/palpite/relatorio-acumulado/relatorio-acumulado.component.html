@@ -1,4 +1,4 @@
-<div class="mt-2">
+<div class="mt-2" *ngIf="!modalItem">
     <h6>Relatório de Acumulado</h6>
     <div class="row align-items-center mb-3">
 
@@ -16,16 +16,101 @@
               </div>
         </div>
         <div class="col-2">
-                <button class="btn-s" > <span class="material-symbols-outlined">info</span></button>
+                <button class="btn-s" (click)="openModel(BolaoItem.id)"> <span class="material-symbols-outlined">info</span> </button>
               
         </div>
     </div>
     <h6>Recuperado <strong>{{porcentagemRecuperacao.toFixed(0)}}%</strong> do valor inicial</h6>
     <div class="p-1 mt-3">
-        <p><strong>O acumulado começará a aumentar somente depois que seu valor for recuperado. 
+        <p><strong>O acumulado inicial será concedido ao jogador, enquanto o valor em recuperação não atingir sua meta. Entretanto, uma vez alcançada a meta de recuperação, o acumulado começará a crescer adicionalmente, proporcionando ao jogador ganhos ainda mais substanciais. 
             Em info mostra com transparência os detalhes do acumulado e 
             do valor recuperado em cada rodada de um campeonato.</strong></p>
     </div>
     
     
 </div>
+
+<div class="mt-2" *ngIf="modalItem">
+  <div class="row align-items-center mb-3">
+
+      <div class="col-12">
+          <div class="d-flex justify-content-between card-span">
+              <span class="verde">Recuperado</span>
+              <span [ngStyle]="{'color': BolaoItem.acumulado > BolaoItem.acumuladoBase ? 'green' : 'black'}">Acumulado Inicial</span>
+            </div>
+          <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" #progressBar  [style.width.%]="porcentagemRecuperacao.toFixed(2)" ></div>
+            </div>
+            <div class="d-flex justify-content-between card-span">
+              <span class="verde">{{BolaoItem.recuperado | currency:'BRL'}}</span>
+              <span [ngStyle]="{'color': BolaoItem.acumulado > BolaoItem.acumuladoBase ? 'green' : 'black'}">{{BolaoItem.acumuladoBase | currency:'BRL'}}</span>
+            </div>
+      </div>
+  </div>
+  <h6>Recuperado <strong>{{porcentagemRecuperacao.toFixed(0)}}%</strong> do valor inicial</h6>
+  <div class="p-1 " style="font-size: 11px;">
+      <p><strong>O acumulado inicial será concedido ao jogador, enquanto o valor em recuperação não atingir sua meta. Entretanto, uma vez alcançada a meta de recuperação, o acumulado começará a crescer adicionalmente, proporcionando ao jogador ganhos ainda mais substanciais. 
+          </strong></p>
+  </div>
+  
+  
+</div>
+
+
+
+  <!-- Modal -->
+  <div  class="modal fade" id="modalAcumulado" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalAcumulado">Relatório do Acumulado</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+           
+
+          <div class="mt-2">
+            <div class="row align-items-center mb-3">
+          
+                <div class="col-12">
+                    <div class="d-flex justify-content-between card-span">
+                        <span class="verde">Recuperado</span>
+                        <span [ngStyle]="{'color': BolaoItem.acumulado > BolaoItem.acumuladoBase ? 'green' : 'black'}">Acumulado Inicial</span>
+                      </div>
+                    <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" #progressBar  [style.width.%]="porcentagemRecuperacao.toFixed(2)" ></div>
+                      </div>
+                      <div class="d-flex justify-content-between card-span">
+                        <span class="verde">{{BolaoItem.recuperado | currency:'BRL'}}</span>
+                        <span [ngStyle]="{'color': BolaoItem.acumulado > BolaoItem.acumuladoBase ? 'green' : 'black'}">{{BolaoItem.acumuladoBase | currency:'BRL'}}</span>
+                      </div>
+                </div>
+            </div>
+            <h6>Recuperado <strong>{{porcentagemRecuperacao.toFixed(0)}}%</strong> do valor inicial</h6>
+            <div class="p-1 " style="font-size: 11px;">
+                <p><strong>O acumulado inicial será concedido ao jogador, enquanto o valor em recuperação não atingir sua meta. Entretanto, uma vez alcançada a meta de recuperação, o acumulado começará a crescer adicionalmente, proporcionando ao jogador ganhos ainda mais substanciais. 
+                    </strong></p>
+            </div>           
+            
+          </div>
+          <table class="table " *ngFor="let round of tabelaRodada">
+            <caption>Lista de Rodadas</caption>
+            <thead>
+              <tr class="table-light">
+                <th scope="col" style="text-align: center;">Data</th>
+                <th scope="col"  style="text-align: center;">Rodada</th>
+                <th scope="col"  style="text-align: center;">Recuperado</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr>
+                <th scope="row"  style="text-align: center;">{{round.data | date:'dd/MM'}} </th>
+                <td  style="text-align: center; font-weight: 600;">{{round.round}}º</td>
+                <td style="text-align: center;"> {{round.recuperado | currency:'BRL'}}</td>
+              </tr>                 
+            </tbody>
+          </table>            
+        </div>
+      </div>
+    </div>
+  </div>

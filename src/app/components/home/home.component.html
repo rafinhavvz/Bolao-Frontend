@@ -1,7 +1,7 @@
 <div class="container">
     <div class="container-btn">
         <button routerLink="gerenciartimes">CRIAR TIME</button>
-        <button routerLink="gerenciarboloes">CRIAR BOLOES</button>
+        <button routerLink="gerenciarboloes">GERENCIAR BOLOES</button>
     </div>
     <div class="container-banner">
         <div class="banner">
@@ -35,7 +35,7 @@
                     </div>
                     <div class="card-btn">
                         <button class="btn-p" [routerLink]="['/bolao', bolao.id]">PARTICIPAR</button>
-                        <button class="btn-s">
+                        <button class="btn-s" (click)="openModel(bolao.id)">
                             <span class="material-symbols-outlined">info</span>
                         </button>
                     </div>
@@ -45,5 +45,39 @@
 </div>
 
 
-
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="homeodal" style="
+  font-size: small;
+" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="homeodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="homeodalLabel">Relatório do Acumulado</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <app-relatorio-acumulado [BolaoItem]="bolao" [modalItem]="modalRelatorio"></app-relatorio-acumulado>
+
+            <table class="table " *ngFor="let round of tabelaRodada">
+                <caption>Lista de Rodadas</caption>
+                <thead>
+                  <tr class="table-light">
+                    <th scope="col" style="text-align: center;">Data</th>
+                    <th scope="col"  style="text-align: center;">Rodada</th>
+                    <th scope="col"  style="text-align: center;">Recuperado</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  <tr>
+                    <th scope="row"  style="text-align: center;">{{round.data | date:'dd/MM'}} </th>
+                    <td  style="text-align: center; font-weight: 600;">{{round.round}}º</td>
+                    <td style="text-align: center;"> {{round.recuperado | currency:'BRL'}}</td>
+                  </tr>                 
+                </tbody>
+              </table>            
+        </div>
+      </div>
+    </div>
+  </div>

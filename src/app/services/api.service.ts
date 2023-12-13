@@ -34,6 +34,12 @@ export class ApiService {
     );
   }
 
+  getTramitacaoRodada(idBolao: any) {
+    return this.http.get<any>(this.baseUrl + "/TramitacaoRodada/IdBolaoList?oItemId="+ idBolao).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   postApostas(aposta: any) {
     console.log("PASSOU",aposta)
     return this.http.post<any>(this.baseUrl + "/Apostas", aposta).pipe(
@@ -58,14 +64,18 @@ export class ApiService {
       catchError(this.handleError)
     );
   }
+
+  updatePartidas(partidas: any) {
+    return this.http.put<any>(this.baseUrl + "/Partidas/update", partidas).pipe(
+      catchError(this.handleError)
+    );
+  }
   
   postApostasPartidas(partidas: any) {
     return this.http.post<any>(this.baseUrl + "/ApostasPartidas", partidas).pipe(
       catchError(this.handleError)
     );
   }
-
-
 
   getBoloesId(id:number){
     return this.http.get<any>(this.baseUrl + "/Boloes/Id?oItemId="+ id).pipe(
@@ -101,6 +111,12 @@ export class ApiService {
     const url = `${this.baseUrl}/Boloes/Update?acumulado=${acumulado}`;
 
     return this.http.put<any>(url, bolao);
+  }
+
+  updateApostaCupom(Cupons: any) {
+    return this.http.put<any>(this.baseUrl + "/Apostas/Update", Cupons).pipe(
+      catchError(this.handleError)
+    );
   }
 
 

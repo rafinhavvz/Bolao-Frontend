@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
-import { Bolao } from '../realizar-palpite/realizar-palpite.component';
+import { Bolao } from '../../pagina/realizar-palpite/realizar-palpite.component';
 import { ApiService } from 'src/app/services/api.service';
 
 

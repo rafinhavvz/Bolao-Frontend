@@ -10,16 +10,17 @@ registerLocaleData(ptBr);
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/pagina/home/home.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask, IConfig } from 'ngx-mask';
 import { GerenciarBoloesComponent } from './components/gerenciar/gerenciar-boloes/gerenciar-boloes.component';
 import { GerenciarTimesComponent } from './components/gerenciar/gerenciar-times/gerenciar-times.component';
-import { RealizarPalpiteComponent } from './components/palpite/realizar-palpite/realizar-palpite.component';
-import { RelatorioCuponsComponent } from './components/palpite/relatorio-cupons/relatorio-cupons.component';
-import { RelatorioAcumuladoComponent } from './components/palpite/relatorio-acumulado/relatorio-acumulado.component';
+import { RealizarPalpiteComponent } from './components/pagina/realizar-palpite/realizar-palpite.component';
+import { RelatorioCuponsComponent } from './components/relatorio/relatorio-cupons/relatorio-cupons.component';
+import { RelatorioAcumuladoComponent } from './components/relatorio/relatorio-acumulado/relatorio-acumulado.component';
 import { CriarBoloesComponent } from './components/gerenciar/criar-boloes/criar-boloes.component';
 import { ExcluirBoloesComponent } from './components/gerenciar/excluir-boloes/excluir-boloes.component';
 import { PublicarBolaoComponent } from './components/gerenciar/publicar-bolao/publicar-bolao.component';
+import { ResultadoComponent } from './components/pagina/resultado/resultado.component';
 
 
 const maskConfig: Partial<IConfig> = {
@@ -38,6 +39,7 @@ const maskConfig: Partial<IConfig> = {
     CriarBoloesComponent,
     ExcluirBoloesComponent,
     PublicarBolaoComponent,
+    ResultadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,7 @@ const maskConfig: Partial<IConfig> = {
   ],  
   providers: [
     provideNgxMask(maskConfig),
+    {provide: LOCALE_ID, useValue: window.navigator.language} 
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
-import { Bolao } from '../palpite/realizar-palpite/realizar-palpite.component';
+import { Bolao } from '../realizar-palpite/realizar-palpite.component';
 
 declare var window:any;
 

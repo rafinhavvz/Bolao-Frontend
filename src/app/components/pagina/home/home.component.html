@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="container-btn">
+    <div class="container-btn pt-2">
         <button routerLink="gerenciartimes">CRIAR TIME</button>
         <button routerLink="gerenciarboloes">GERENCIAR BOLOES</button>
     </div>
@@ -33,7 +33,7 @@
                         <div class="d-flex" style="flex-direction: column;"><span class="title-p">Acumulado</span><span class="title-s">{{bolao.acumulado | currency:'BRL'}}</span></div>
                     
                     </div>
-                    <div class="card-btn">
+                    <div class="card-btn pt-3">
                         <button class="btn-p" [routerLink]="['/bolao', bolao.id]">PARTICIPAR</button>
                         <button class="btn-s" (click)="openModel(bolao.id)">
                             <span class="material-symbols-outlined">info</span>

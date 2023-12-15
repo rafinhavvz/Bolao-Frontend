@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { Bolao } from '../realizar-palpite/realizar-palpite.component';
+import { Bolao } from '../../pagina/realizar-palpite/realizar-palpite.component';
 declare var window: any;
 
 export interface cupom{

@@ -50,7 +50,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Prêmio total pago:</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{premioTotalPago  | currency:'BRL'}}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{bolaoselecionado.valorPago  | currency:'BRL'}}</h6>
                         </div>
                       </div>                      
                 </div>
@@ -58,7 +58,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Prêmio:                            </h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{premio  | currency:'BRL'}}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{bolaoselecionado.premio  | currency:'BRL'}}</h6>
                         </div>
                       </div>                      
                 </div>
@@ -66,7 +66,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Acumulado:</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{acumulado | currency:'BRL'}}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{bolaoselecionado.acumulado | currency:'BRL'}}</h6>
                         </div>
                       </div>                      
                 </div>
@@ -82,7 +82,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Qtd de Acertos:</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{qtdAcertos }}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{bolaoselecionado.qtdAcerto }}</h6>
                         </div>
                       </div>                      
                 </div>
@@ -90,7 +90,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Cupons Premiado:</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{cuponsPremiados }}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{bolaoselecionado.cuponsPremiados }}</h6>
                         </div>
                       </div>                      
                 </div>
@@ -98,7 +98,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Valor Para cada Cupom:</h5>
-                            <h6 class="card-subtitle mb-2 text-body-secondary">{{valorPorCupom | currency:'BRL'}}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{bolaoselecionado.valorPago / bolaoselecionado.cuponsPremiados| currency:'BRL'}}</h6>
                         </div>
                       </div>                      
                 </div>
@@ -106,8 +106,6 @@
             
            
             <p>Total de cupons: {{totalCupon(apostas)}}</p>
-            <h2>Acumulado: {{acumulado}}</h2>
-            <h2>Premio: {{premio}}</h2>
             <div *ngFor="let aposta of apostas">
                 <div class="card">
                     <button class="card-header d-flex justify-content-between" data-bs-toggle="collapse"

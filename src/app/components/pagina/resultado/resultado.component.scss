@@ -1,4 +1,4 @@
-.container {
+.container-fluid {
     height: 100%;
     background-color: var(--cinza-color);
 
@@ -27,15 +27,6 @@
         background: linear-gradient(91deg, #132D51 0%, #0B2240 100%);
     }
 
-    .teste{
-        width: 100%;
-        height: auto;
-        background: blue;
-    }
-    .teste2{
-        width: 100%;
-        height: auto;
-    }
 }
 
 .row {
@@ -50,17 +41,17 @@
 }
 
 .card-span {
-    Span{
+    Span {
         font-size: small;
         font-weight: 500;
     }
-   
-   
+
+
 }
 
 .card {
     z-index: 10;
-    min-width:100%;
+    min-width: 100%;
     min-height: 86px;
     background-color: white;
     cursor: pointer;
@@ -104,10 +95,10 @@
 
     .card-informe {
         height: 100%;
-            display: flex;
-            padding: 6px 4px;
-            flex-direction: column;
-            justify-content: center; 
+        display: flex;
+        padding: 6px 4px;
+        flex-direction: column;
+        justify-content: center;
 
         .title {
             font-size: 20px;
@@ -119,11 +110,11 @@
         .title-seg {
             font-size: 15px;
             font-weight: 400;
-            color:#5D6C81;
+            color: #5D6C81;
             margin: 0;
         }
 
-       
+
 
 
 
@@ -143,322 +134,374 @@
         margin: 0px;
     }
 
-    .icon{
+    .icon {
         align-self: center;
         text-align: center;
         font-size: 30px;
-        transition:  0.5s;
+        transition: 0.5s;
+
         span {
-            transition: transform 0.5s; /* Adicionando transição para a propriedade transform */
-            -webkit-transition: -webkit-transform 0.5s; /* Prefixo para navegadores WebKit (como o Safari) */
-          }
+            transition: transform 0.5s;
+            /* Adicionando transição para a propriedade transform */
+            -webkit-transition: -webkit-transform 0.5s;
+            /* Prefixo para navegadores WebKit (como o Safari) */
+        }
+
         .material-symbols-outlined {
             font-size: 30px;
             color: #044793;
-          
+
             font-variation-settings:
-            'FILL' 0,
-            'wght' 700,
-            'GRAD' 0,
-            'opsz' 30
-            }
+                'FILL' 0,
+                'wght' 700,
+                'GRAD' 0,
+                'opsz' 30
+        }
     }
-        
+
 
 }
 
 .barra {
     width: 98%;
     // height: 0px;
+    padding: 2px;
     top: -6px;
     position: relative;
     background-color: #ffffff;
     color: black;
-    border-radius:  0px 0px 9px 9px;
-    overflow:hidden;
-  }
+    border-radius: 0px 0px 9px 9px;
+    overflow: auto;
+}
 
-  .barra::-webkit-scrollbar {
-    width: 7px;               /* width of the entire scrollbar */
-    border-radius: 20px;  
-  }
-  
-  .barra::-webkit-scrollbar-track {
-    background: rgb(241, 241, 241);        /* color of the tracking area */
-    border-radius: 20px;  
-  }
-  
-  .barra::-webkit-scrollbar-thumb {
-    background-color: rgb(180, 180, 180);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 3px solid  rgb(180, 180, 180);   /* creates padding around scroll thumb */
-  }
-  
-  .conteudo {
-    padding: 15px 0px;
+.barra::-webkit-scrollbar {
+    width: 7px;
+    /* width of the entire scrollbar */
+    border-radius: 20px;
+}
+
+.barra::-webkit-scrollbar-track {
+    background: rgb(241, 241, 241);
+    /* color of the tracking area */
+    border-radius: 20px;
+}
+
+.barra::-webkit-scrollbar-thumb {
+    background-color: rgb(180, 180, 180);
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 3px solid rgb(180, 180, 180);
+    /* creates padding around scroll thumb */
+}
+
+.conteudo {
+    padding: 15px 10px 15px 10px;
     text-align: center;
     color: rgb(0, 0, 0);
-  }
-
-  .info-time-date{
-    line-height: 1.4;
-    color:#C2C2C2;
-    font-size: 14px;
-    align-self: center;
-  }
-
-  .info-time{
-    line-height: 1.4;
-    border-left: 2px solid #E2DFDF;
-    padding-left: 15px;
-    
-
-    .home{
+    .home {
         font-weight: 500;
     }
-    .away{
+
+    .away {
         font-weight: 500;
+       
+    }
+    .text-cinza{
         color: #E2DFDF;
     }
+}
 
-    img{
+.info-time-date {
+    line-height: 1.4;
+    color: #C2C2C2;
+    font-size: 14px;
+    align-self: center;
+}
+
+.info-time {
+    line-height: 1.4;
+    border-left: 2px solid #E2DFDF;
+    padding-left: 15px;    
+    
+
+    img {
         width: 18px;
     }
 
-  }
+}
 
-  .info-time-palpite{
+.table-active {
+    --bs-table-color-state: #ffffff !important;
+    --bs-table-bg-state: rgb(0 67 156) !important;
+    border-radius: 31px;
+}
+
+.table-hover > tbody > tr{
+    cursor: pointer;
+
+}
+
+.table-hover > tbody > tr:hover > * {
+    --bs-table-color-state: #ffffff !important;
+    --bs-table-bg-state: rgb(45, 93, 156) !important;
+}
+.info-time-palpite {
     align-self: center;
     text-align: -webkit-center;
+    border-left: 2px solid #E2DFDF;
 
-    .palpite{
+    .palpite-ganho {
         font-weight: 500;
         padding: 6px;
         color: white;
         border-radius: 9px;
         width: 36px;
         height: 100%;
-        background-color: #044793;
+        background-color: #009C51;
     }
-   
-        
-    
-  }
+    .palpite-perdido {
+        font-weight: 500;
+        padding: 6px;
+        color: white;
+        border-radius: 9px;
+        width: 36px;
+        height: 100%;
+        background-color: #9C0000;
+    }
 
-  .info-time-resultado{
+
+
+}
+
+.info-time-resultado {
     line-height: 1.4;
-    border-right: 2px solid #E2DFDF;
-    .home{
-        font-weight: 500;
-    }
-    .away{
-        font-weight: 500;
-        color: #E2DFDF;
-    }
+   
+    font-weight: 500;
 
-  }
+}
 
-  .title-palpite{
+.title-palpite {
     font-size: 12px;
     font-weight: 600;
-  }
+}
 
-  .contarine-resultado{
+.contarine-resultado {
     width: 100%;
-        height: auto;
-        background: rgb(255, 255, 255);
-        border-radius: 9px;
+    height: auto;
+    background: rgb(255, 255, 255);
+    border-radius: 9px;
 
-    .resultado-premios{
+    .resultado-premios {
         padding: 5px;
-        .premio{       
+
+        .premio {
             padding: 5px;
             background: #F6F5F5;
             height: 59px;
             border-radius: 5px;
         }
-        .acumulado{       
+
+        .acumulado {
             padding: 5px;
             background: #F6F5F5;
             height: 59px;
             border-radius: 5px;
         }
-      }
-    
-      .resultado-valorpago{
+    }
+
+    .resultado-valorpago {
         padding: 5px;
-        .valor{       
-            padding: 5px;
+
+        .valor {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 10px;
             background: #F6F5F5;
             height: 50px;
             border-radius: 5px;
         }
-      }
-    
-      .resultado-cupons{
+    }
+
+    .resultado-cupons {
         padding: 5px;
-        .premiado{       
+
+        .premiado {
             padding: 5px;
             background: #F6F5F5;
             height: 59px;
             border-radius: 5px;
         }
-        .vlcupom{       
+
+        .vlcupom {
             padding: 5px;
             background: #F6F5F5;
             height: 59px;
             border-radius: 5px;
         }
-      }
-      .resultado-ganahdores{
+    }
+
+    .resultado-ganahdores {
         padding: 5px;
-        .ganhadores{   
-            padding: 5px;    
+
+        .ganhadores {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 10px;
             background: #F6F5F5;
             height: 35px;
             border-radius: 5px;
         }
-        .acertos{   
-            padding: 5px;    
+
+        .acertos {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 10px;
             background: #F6F5F5;
             height: 35px;
             border-radius: 5px;
         }
-      }
-  }
- 
+    }
+
+   
+}
+
 
 // Large devices (desktops, 992px and up)  LG
-@media (max-width: 1201px)  { 
+@media (max-width: 1201px) {
     .card {
-    
+
         .card-banner {
             width: 60px;
             height: 60px;
         }
-    
+
         .card-informe {
-               
-    
+
+
             .title {
                 line-height: 1.1;
                 font-size: 18px;
                 font-weight: 600;
                 margin: 0px;
-    
+
             }
 
-                .title-seg {
-                    font-size: 13px;
-                    margin: 0px;
-                }
-              }
-
-              .sub-title {
+            .title-seg {
                 font-size: 13px;
-                font-weight: 600;
-                margin: 0px;
-        
-            }
-        
-            .sub-title-seg {
-                font-size: 18px;
-                font-weight: 400;
-                color: #044793;
                 margin: 0px;
             }
-    
-    }
- }
-
-// Medium devices (tablets, 768px and up) MD
-@media (max-width: 991.98px) { 
-    .card {
-        .card-banner {
-            width: 50px;
-            height: 50px;
-        }
-    
-        .card-informe {
-            padding: 6px 4px;
-    
-            .title {
-                line-height: 1.1;
-                font-size: 14px;
-                font-weight: 600;
-                margin: 0px;
-    
-            }
-
-                .title-seg {
-                    font-size: 12px;
-                    margin: 0px;
-                }
-              }
-              .sub-title {
-                font-size: 13px;
-                font-weight: 600;
-                margin: 0px;
-        
-            }
-        
-            .sub-title-seg {
-                font-size: 12px;
-                font-weight: 400;
-                color: #044793;
-                margin: 0px;
-            }
-              
-    }
- }
-
-// Small devices (landscape phones, 576px and up) SM
-@media (max-width: 767.98px) { 
-
-    .card {
-    
-        .card-banner {
-            width: 50px;
-            height: 50px;
-        }
-    
-    
-        .card-informe {
-            padding: 6px 4px;
-    
-            .title {
-                line-height: 1.1;
-                font-size: 13px;
-                font-weight: 600;
-                margin: 0px;
-    
-            }
-
-                .title-seg {
-                    font-size: 12px;
-                    margin: 0px;
-                }
         }
 
         .sub-title {
             font-size: 13px;
             font-weight: 600;
             margin: 0px;
-    
+
         }
-    
+
+        .sub-title-seg {
+            font-size: 18px;
+            font-weight: 400;
+            color: #044793;
+            margin: 0px;
+        }
+
+    }
+}
+
+// Medium devices (tablets, 768px and up) MD
+@media (max-width: 991.98px) {
+    .card {
+        .card-banner {
+            width: 50px;
+            height: 50px;
+        }
+
+        .card-informe {
+            padding: 6px 4px;
+
+            .title {
+                line-height: 1.1;
+                font-size: 14px;
+                font-weight: 600;
+                margin: 0px;
+
+            }
+
+            .title-seg {
+                font-size: 12px;
+                margin: 0px;
+            }
+        }
+
+        .sub-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0px;
+
+        }
+
         .sub-title-seg {
             font-size: 12px;
             font-weight: 400;
             color: #044793;
             margin: 0px;
         }
-    
-    }
- }
 
- @media (max-width: 575.98px) { 
-    
+    }
+}
+
+// Small devices (landscape phones, 576px and up) SM
+@media (max-width: 767.98px) {
+
+    .card {
+
+        .card-banner {
+            width: 50px;
+            height: 50px;
+        }
+
+
+        .card-informe {
+            padding: 6px 4px;
+
+            .title {
+                line-height: 1.1;
+                font-size: 13px;
+                font-weight: 600;
+                margin: 0px;
+
+            }
+
+            .title-seg {
+                font-size: 12px;
+                margin: 0px;
+            }
+        }
+
+        .sub-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0px;
+
+        }
+
+        .sub-title-seg {
+            font-size: 12px;
+            font-weight: 400;
+            color: #044793;
+            margin: 0px;
+        }
+
+    }
+}
+
+@media (max-width: 575.98px) {
+
     .sub-title {
         font-size: 13px;
         font-weight: 600;
@@ -472,5 +515,4 @@
         color: #044793;
         margin: 0px;
     }
-  }
-
+}

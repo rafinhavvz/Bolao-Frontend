@@ -9,6 +9,8 @@ export interface Aposta {
     status: string;
     valorApostado: number;
     valorGanho: number;
+    cuponsPremiados:number;
+    valorPago:number;
     partidas: partida[]
 }
 
@@ -26,5 +28,7 @@ export interface partida {
     nomeTimeAway: string;
     logoTimeHome: string;
     logoTimeAway: string;
+    
+
 
 }

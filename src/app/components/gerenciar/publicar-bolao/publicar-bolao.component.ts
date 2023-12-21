@@ -10,20 +10,14 @@ import { ApiService } from 'src/app/services/api.service';
 export class PublicarBolaoComponent {
 
   boloes: any[] = [];
+  bolaoselecionado:any = {};
   partidas: any[] = [];
   botaoAtivoIndex: number[] = [];
   selectedBolaoId = 0;
   totalCupons = 0;
 
-  acumulado = 0;
-  premio = 0;
-
-
-  cuponsPremiados = 0;
   totalGanhadores = 0;
   qtdAcertos = 0;
-  valorPorCupom = 0;
-  premioTotalPago = 0;
 
   apostas: Aposta[] = [];
 
@@ -37,47 +31,49 @@ export class PublicarBolaoComponent {
     const dataAtual = new Date();
     this.api.getBoloes().subscribe(res => {
       this.boloes = res.filter((bolao: { dataFim: Date; }) => {
-        const dataBolao = new Date(bolao.dataFim); 
+        const dataBolao = new Date(bolao.dataFim);
         return dataBolao < dataAtual;
       });
     })
+
+
   }
 
   getPartidas(e: any) {
+    console.log("BOLAO:", this.boloes)
+
+
     this.api.getPartidasId(e).subscribe(res => {
       this.partidas = res;
-      console.log("PArtidas",this.partidas);
+      console.log("PArtidas", this.partidas);
 
       this.partidas.forEach((partida, index) => {
         // Substitua 'SEU_VALOR_PADRAO' pelo valor padrão que você deseja usar ao chamar a função selecionarTeam
         const resultado = partida.resultado;
-        
+
         this.selecionarTeam(resultado, index, resultado);
       });
 
     });
     this.api.getApostaIdBolao(e).subscribe(res => {
       this.apostas = res;
-      console.log("APOSTA TESTE",this.apostas)
+      console.log("APOSTA TESTE", this.apostas)
       this.apostas.forEach((aposta) => {
         this.api.getPartidasApostaId(aposta.id).subscribe((partidas) => {
           aposta.partidas = partidas;
         });
       });
     });
-     // Certifique-se de que 'e' contém o ID desejado.
-    const bolao = this.boloes.find(bolao => bolao.id == e);
-    
-    this.acumulado = bolao.acumulado;
-    this.premio = bolao.premio;
+    // Certifique-se de que 'e' contém o ID desejado.
+    this.bolaoselecionado = this.boloes.find(bolao => bolao.id == e);
 
 
   }
 
-  totalCupon(aposta:any){
-    let totalCupom:any = 0;
+  totalCupon(aposta: any) {
+    let totalCupom: any = 0;
     for (var i = 0; i < aposta.length; i++) {
-      totalCupom +=  aposta[i].qtdCupom;
+      totalCupom += aposta[i].qtdCupom;
     }
     return totalCupom;
   }
@@ -120,9 +116,9 @@ export class PublicarBolaoComponent {
       // Ordenar em ordem decrescente (do maior número de acertos para o menor)
       return acertosB - acertosA;
     });
-    
+
     this.calcularValor(this.apostas);
-  
+
   }
 
   calcularPartidasAcertadas(aposta: Aposta): string {
@@ -136,7 +132,7 @@ export class PublicarBolaoComponent {
   }
 
   calcularValor(aposta: any): void {
-    
+
     // Suponha que 'acumulado' e 'premio' sejam variáveis que contêm os valores acumulado e prêmio, respectivamente
     let totalGanhadores = 0;
     let totalCupons = 0;
@@ -168,51 +164,47 @@ export class PublicarBolaoComponent {
       } else {
         aposta.status = 'PERDIDA';
       }
-      
+
     });
-    
 
-          let premioTotalPago = 0;
 
-          if (maiorQuantidadeAcertos === this.partidas.length) {
-            premioTotalPago = parseFloat((this.acumulado + this.premio).toFixed(2));
-          } else if (maiorQuantidadeAcertos > 0) {
-            premioTotalPago = parseFloat(this.premio.toFixed(2));
-          }
+    let premioTotalPago = 0;
 
-      // Se houver ganhadores, calcule o valor para cada cupom
-      if (totalGanhadores > 0) {
-        const valorPorCupom = parseFloat((premioTotalPago / totalCupons).toFixed(2));
+    if (maiorQuantidadeAcertos === this.partidas.length) {
+      premioTotalPago = parseFloat((this.bolaoselecionado.acumulado + this.bolaoselecionado.premio).toFixed(2));
+    } else if (maiorQuantidadeAcertos > 0) {
+      premioTotalPago = parseFloat(this.bolaoselecionado.premio.toFixed(2));
+    }
 
-        aposta.forEach((aposta: { valorGanho: number; status: string; qtdCupom: number; }) => {
-          aposta.valorGanho = aposta.status === 'GANHO' ? valorPorCupom * aposta.qtdCupom : 0;
-          aposta.valorGanho = parseFloat(aposta.valorGanho.toFixed(2));
-          console.log( aposta.valorGanho.toFixed(2))
-        });
+    // Se houver ganhadores, calcule o valor para cada cupom
+    if (totalGanhadores > 0) {
+
+      const valorPorCupom = premioTotalPago / totalCupons;
+
+      aposta.forEach((aposta: { valorGanho: number; status: string; qtdCupom: number; }) => {
+        aposta.valorGanho = aposta.status === 'GANHO' ? valorPorCupom * aposta.qtdCupom : 0;
+
+      });
+    }
+
+    for (let i = 0; i < this.boloes.length; i++) {
+      if (this.boloes[i].id === aposta[0].idBolao) {
+        // Atualiza as propriedades do bolão encontrado
+        this.boloes[i].cuponsPremiados = totalCupons;
+        this.boloes[i].valorPago = premioTotalPago;
+        this.boloes[i].qtdAcerto = maiorQuantidadeAcertos;
+        break;  // Interrompe o loop após encontrar o bolão
       }
-   
-
-    // Calcule o valor para cada cupom
-    //const premioTotalPago = maiorQuantidadeAcertos === this.partidas.length ? this.acumulado + this.premio : this.premio;
-    const valorPorCupom = premioTotalPago / totalCupons;
-    console.log("APOSTAS", this.apostas);
-    // console.log("totalCupons",totalCupons)
-    // console.log(`Total de ganhadores: ${totalGanhadores}`);
-    // console.log(`Maior quantidade de acertos: ${maiorQuantidadeAcertos}`);
-    // console.log(`Prêmio total pago: ${premioTotalPago}`);
-    // console.log(`Valor para cada cupom: ${valorPorCupom}`);
-    this.cuponsPremiados = totalCupons;
+    }
     this.totalGanhadores = totalGanhadores;
-    this.qtdAcertos = maiorQuantidadeAcertos;
-    this.valorPorCupom = valorPorCupom;
-    this.premioTotalPago = premioTotalPago;
+
   }
 
-  publicarBolao(){
+  publicarBolao() {
     console.log(this.apostas)
-   
 
-    const updatePartida:any = [];
+
+    const updatePartida: any = [];
 
     this.partidas.forEach(partida => {
       // Criar um novo objeto para cada partida
@@ -223,34 +215,43 @@ export class PublicarBolaoComponent {
         idTeamAway: partida.idTeamAway,
         data: partida.data,
         resultado: partida.resultado,
-        status:'FINALIZADO'
+        status: 'FINALIZADO'
         // Adicione as outras propriedades conforme necessário
       };
-    
+
       // Adicionar o objeto atualizado ao array
       updatePartida.push(partidaAtualizada);
     });
-    
+
     console.log(updatePartida);
     this.api.updatePartidas(updatePartida).subscribe({
-      next:(res:any) => {
+      next: (res: any) => {
         console.log(res)
-        this.verificarGanhador();    
+        this.verificarGanhador();
+        this.api.updateBoloes(this.bolaoselecionado, 0).subscribe({
+          next: (res: any) => {
+            console.log(res)
+
+          },
+          error: (error: any) => {
+            console.error('Erro ao carregar os bolões:', error);
+          }
+        })
         this.api.updateApostaCupom(this.apostas).subscribe({
-            next:(res:any) => {
-              console.log(res)
-              
-            },
-            error: (error:any) =>{
-              console.error('Erro ao carregar os bolões:', error);
-            }
+          next: (res: any) => {
+            console.log(res)
+
+          },
+          error: (error: any) => {
+            console.error('Erro ao carregar os bolões:', error);
+          }
         })
       },
-      error: (error:any) =>{
+      error: (error: any) => {
         console.error('Erro ao carregar os bolões:', error);
       }
     });
   }
 
- 
+
 }

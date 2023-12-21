@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 
 registerLocaleData(ptBr);
@@ -50,6 +50,7 @@ const maskConfig: Partial<IConfig> = {
     BrowserAnimationsModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    CommonModule
   ],  
   providers: [
     provideNgxMask(maskConfig),

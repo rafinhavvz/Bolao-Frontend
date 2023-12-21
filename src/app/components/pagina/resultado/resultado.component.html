@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container-fluid">
     <div class="container-btn pt-2">
         <button routerLink="gerenciartimes">CRIAR TIME</button>
-        <button routerLink="gerenciarboloes">GERENCIAR BOLOES</button>
+        <button routerLink="/gerenciarboloes">GERENCIAR BOLOES</button>
     </div>
     <div class="container-banner">
         <div class="banner">
@@ -13,19 +13,84 @@
         <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12  p-1">
             <div class="teste">
                 <!-- barra.component.html -->
-                <div class="contarine-resultado">
+                <div class="contarine-resultado" *ngIf="mostrarBarra" [@fadeInOut]>
                     Resultado
                     <div class="row">
-                        <div class="resultado-premios col-6 "> 
-                            <div class="premio">Prêmio:</div></div>
                         <div class="resultado-premios col-6 ">
-                            <div class="acumulado">Acumulado:</div> </div>
-                        <div class="col-12 resultado-valorpago "> <div class="valor"> Valor Pago:</div></div>
-                        <div class="col-6 resultado-cupons"> <div class="premiado">Cupons Premiados</div> </div>
-                        <div class="col-6 resultado-cupons"> <div class="vlcupom">Valor Por Cupom</div> </div>
-                        <div class="col-6 resultado-ganahdores"> <div class="ganhadores">Ganhadores</div> </div>
-                        <div class="col-6 resultado-ganahdores"> <div class="acertos">Acertos</div> </div>
+                            <div class="premio">
+                                <div>Prêmio:</div>
+                                <div style="
+                                text-align: end;
+                            ">{{bolaoselecionado.premio  | currency:'BRL'}}</div>
+                            </div>
+                        </div>
+                        <div class="resultado-premios col-6 ">
+                            <div class="acumulado">
+                                <div>Acumulado:</div>
+                                <div style="
+                            text-align: end;
+                        ">{{bolaoselecionado.acumulado | currency:'BRL'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-12 resultado-valorpago ">
+                            <div class="valor">
+                                <div>Valor Pago:</div>
+                                <div>{{bolaoselecionado.valorPago  | currency:'BRL'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-6 resultado-cupons">
+                            <div class="premiado">
+                                <div>Cupons Premiados:</div>
+                                <div style="
+                                text-align: end;
+                            ">{{bolaoselecionado.cuponsPremiados }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6 resultado-cupons">
+                            <div class="vlcupom">
+                                <div>Valor Por Cupom:</div>
+                                <div style="
+                            text-align: end;
+                        ">{{bolaoselecionado.valorPago / bolaoselecionado.cuponsPremiados| currency:'BRL'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-6 resultado-ganahdores">
+                            <div class="ganhadores">
+                                <div>Ganhadores:</div>
+                                <div> {{contarGanhadores() }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6 resultado-ganahdores">
+                            <div class="acertos">
+                                <div>Acertos:</div>
+                                <div> {{bolaoselecionado.qtdAcerto }} de {{bolaoselecionado?.partidas?.length}}</div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="row">
+                        <table class="table table-hover table-sm" style=" font: small-caption;white-space: nowrap;">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: 700; " scope="col">Cupom</th>
+                                    <th style="font-weight: 700; " scope="col">Jogador </th>
+                                    <th style="font-weight: 700; " scope="col">Data</th>
+                                    <th style="font-weight: 700; " scope="col">Cupons</th>
+                                    <th style="font-weight: 700; " scope="col">Ganho</th>
+                                </tr>
+                            </thead>
+                            <tbody  *ngFor="let cupom of apostas; let i = index" (click)="cupomAposta(cupom); linhaAtiva = i">
+                                <tr [class.table-active]="i === linhaAtiva">
+                                    <td>{{cupom.cupons}}</td>
+                                    <th scope="row">{{cupom.idCliente}}</th>
+                                    <td>{{cupom.data | date:"dd/MM"}}</td>
+                                    <td>{{cupom.qtdCupom}}</td>
+                                    <td>{{cupom.valorGanho  | currency:'BRL'}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
 
@@ -34,128 +99,139 @@
         <div class="col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12  mb-5 p-1">
             <div class="teste2">
 
-
-                <div class="card" (click)="toggleBarra()"
-                    [ngStyle]="{ 'box-shadow': mostrarBarra ? '0px 7px 20px -6px rgba(0,0,0,0.75)' : 'none', 'transition': 'box-shadow 0.5s' }">
-                    <div class="card-data">
-                        <div class="card-info">
-                            <span>Rodada 1</span>
-                            <span>Finalizado</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div style="text-align: -webkit-center;" class="col-xl-1  col-lg-2 col-md-2 col-sm-2 col-2">
-                            <div class="card-banner ">
-                                <img src="data:image/jpeg;base64,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"
-                                    alt="">
+                <div class="card-princial" *ngFor="let bolao of boloesDuplicado; let i = index"  >
+                    <div *ngIf="!indexMostrarBarra || indexMostrarBarra === bolao.id" [@fadeInOut]>
+                    <div class="card" (click)="toggleBarra(bolao.id) ">
+                        <div class="card-data">
+                            <div class="card-info">
+                                <span>Rodada {{bolao.round}}</span>
+                                <span>{{bolao.status | titlecase}}</span>
                             </div>
                         </div>
-                        <div class="col-xl-7 col-lg-6  col-md-6 col-sm-6 col-6 ">
-                            <div class="card-informe">
+                        <div class="row">
+                            <div style="text-align: -webkit-center;" class="col-xl-1  col-lg-2 col-md-2 col-sm-2 col-2">
+                                <div class="card-banner ">
+                                    <img [src]="bolao.logo" alt="">
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-6  col-md-6 col-sm-6 col-6 ">
+                                <div class="card-informe">
+                                    <div>
+                                        <p class="title">{{bolao.name}}</p>
+
+                                    </div>
+                                    <div>
+                                        <p class="title-seg">{{bolao.idCampeonato}}</p>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                            <div style="text-align: end;align-self: center;"
+                                class="col-xl-3 col-lg-3   col-md-3 col-sm-3 col-3">
                                 <div>
-                                    <p class="title"> Brasileiro Série A&B</p>
+                                    <p class="sub-title"> Valor Pago</p>
 
                                 </div>
                                 <div>
-                                    <p class="title-seg">Campeonato</p>
+                                    <p class="sub-title-seg">{{bolao.valorPago | currency:'BRL'}}</p>
                                 </div>
-
-
+                            </div>
+                            <div class="icon col-xl-1 col-lg-1  col-md-1 col-sm-1 col-1">
+                                <span class="material-symbols-outlined"
+                                    [ngStyle]="{'transform': mostrarBarra && indexMostrarBarra === bolao.id ? 'rotate(180deg)' : 'rotate(0deg)', 'transition': 'transform 0.5s'}">expand_more</span>
 
                             </div>
-                        </div>
-
-                        <div style="text-align: end;align-self: center;"
-                            class="col-xl-3 col-lg-3   col-md-3 col-sm-3 col-3">
-                            <div>
-                                <p class="sub-title"> Valor Pago</p>
-
-                            </div>
-                            <div>
-                                <p class="sub-title-seg">R$ 100.000,00</p>
-                            </div>
-                        </div>
-                        <div class="icon col-xl-1 col-lg-1  col-md-1 col-sm-1 col-1">
-                            <span class="material-symbols-outlined"
-                                [ngStyle]="{'transform': mostrarBarra ? 'rotate(180deg)' : 'rotate(0deg)', 'transition': 'transform 0.5s'}">expand_more</span>
-
                         </div>
                     </div>
                 </div>
-                <div style="text-align: -webkit-center; width: 100%;">
-                    <div class="barra" #conteudoRef [@expandeContrai]="mostrarBarra">
-                        <div class="conteudo">
-                            <div class="row">
-                                <div style="padding: 0px 10px;text-align: start;">
-                                    <div><span> <strong>Resumo Cupom:</strong> XSDFSD89</span></div>
-                                    <div><span>Acertos: 13 de 16</span></div>    
+                    <div style="text-align: -webkit-center; width: 100%;">
+                        <div class="barra" #conteudoRef [@expandeContrai]="mostrarBarra && indexMostrarBarra === bolao.id">
+                            <div class="conteudo">
+                                <div class="row" *ngIf="mostraCupom" [@fadeInOut]>
+                                    <div style="padding: 0px 10px;text-align: start;">
+                                        <div><span> <strong>Resumo Cupom:</strong> {{cupomSelecionado.cupom}}</span></div>
+                                        <div><span>Acertos: {{bolaoselecionado.qtdAcerto }} de {{bolaoselecionado?.partidas?.length}}</span></div>
+                                    </div>
+                                    <table class="table" style=" font: small-caption;white-space: nowrap;">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-weight: 700; " scope="col">Jogador: </th>
+                                                <th style="font-weight: 700; " scope="col">Data</th>
+                                                <th style="font-weight: 700; " scope="col">Apostado</th>
+                                                <th style="font-weight: 700; " scope="col">Ganho</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">{{cupomSelecionado.idCliente}}</th>
+                                                <td>{{cupomSelecionado.data | date:"dd/MM"}}</td>
+                                                <td>{{cupomSelecionado.valor  | currency:'BRL'}}</td>
+                                                <td>{{cupomSelecionado.valorGanho  | currency:'BRL'}}</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <table class="table" style=" font: small-caption;white-space: nowrap;">
-                                    <thead>
-                                      <tr>
-                                        <th style="font-weight: 700; " scope="col">Jogador: </th>
-                                        <th style="font-weight: 700; "  scope="col">Data</th>
-                                        <th style="font-weight: 700; " scope="col">Apostado</th>
-                                        <th style="font-weight: 700; "  scope="col">Ganho</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <th scope="row">RAFAEL F</th>
-                                        <td>13/12</td>
-                                        <td>R$ 10,00</td>
-                                        <td>R$ 13.098,00</td>
-                                      </tr>
-                                     
-                                    </tbody>
-                                  </table>
-                            </div>
-                            <div class="row mb-1" >      
-                                <div class="title-palpite col-10 align-self-center" style="
-                                text-align: start;
-                                padding: 0px 10px;
-                                border-right: 2px solid #e2dfdf;
-                            ">
-                                    Resultado                                    
-                                 </div>                        
-                                <div class="title-palpite col-2 align-self-center">
-                                   Palpite                                    
-                                </div>
-                            </div>
-                           
-                            <div class="row mb-3">
-                                <div class="info-time-date col-xl-2 col-lg-2 col-md-3 col-sm-2 col-3 ">
-                                    15/12/2012
-                                    <br>
-                                    FT
-                                </div>
-                                <div style="text-align: start;"
-                                    class="info-time col-xl-7 col-lg-7 col-md-6 col-sm-7 col-6 ">
-                                    <div class="home"> <img src="https://api.sofascore.app/api/v1/team/5981/image"
-                                            alt="">Flamengo</div>
-                                    <div class="away"><img src="https://api.sofascore.app/api/v1/team/1974/image"
-                                            alt="">Vasco</div>
+                                <div class="row mb-1">
+                                    <div [ngClass]="{'col-10': mostraCupom, 'col-12': !mostraCupom}" class="title-palpite  align-self-center" style="
+                                text-align: start; padding: 0px 10px; ">
+                                        Resultado
+                                    </div>
+                                    <div class="title-palpite col-2 align-self-center"  *ngIf="mostraCupom" style="border-left: 2px solid #e2dfdf;" >
+                                        Palpite
+                                    </div>
                                 </div>
 
-                                <div class=" info-time-resultado  col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                    <span class="home">1</span><br>
-                                    <span class="away">1</span>
+                                <div *ngFor="let partida of bolao.partidas">
+                                    <div class="row mb-3">
+                                        <div class="info-time-date col-xl-2 col-lg-2 col-md-3 col-sm-2 col-3 ">
+                                            {{partida.data | date:"dd/MM/yyyy"}}
+                                            <br>
+                                            FT
+                                        </div>
+                                        <div style="text-align: start;"
+                                            class="info-time col-xl-7 col-lg-7 col-md-6 col-sm-7 col-6 "
+                                            [ngClass]="{' col-xl-7 col-lg-7 col-md-6 col-sm-7 col-6': mostraCupom, ' col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8': !mostraCupom}">
+                                            <div class="home" [ngClass]="{'text-cinza': partida.resultHome <= partida.resultAway && partida.status == 'FINALIZADO'}">
+                                                <img [src]="partida.timeHomeLogo" alt="">
+                                                    {{partida.timeHomeName}}</div>
+                                            <div class="away" [ngClass]="{'text-cinza': partida.resultAway <= partida.resultHome && partida.status == 'FINALIZADO'}">
+                                                <img [src]="partida.timeAwayLogo" alt="">
+                                                {{partida.timeAwayName}}
+                                            </div>
+                                        </div>
+    
+                                        <div class=" info-time-resultado  col-xl-1 col-lg-1 ml-lg-auto col-md-1 col-sm-1 col-1"
+                                        
+                                        >
+                                            <span class="home" [ngClass]="{'text-cinza': partida.resultHome <= partida.resultAway}">{{partida.resultHome}}</span><br>
+                                            <span class="away" [ngClass]="{'text-cinza': partida.resultAway <= partida.resultHome}">{{partida.resultAway}}</span>
+                                        </div>
+                                        <div class="info-time-palpite col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2" 
+                                       
+                                        *ngIf="mostraCupom">
+                                            <div  >
+                                                <div class="palpite" [ngClass]="palpiteCupom(partida.id)?.classes"   [@fadeInOutWithOpacity]>
+                                                    <span>{{palpiteCupom(partida.id)?.resultadoApost}}</span>
+                                                </div>
+                                            </div>
+                                            
+    
+                                        </div>
+    
+                                    </div>
                                 </div>
-                                <div class="info-time-palpite col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
-                                   <div class="palpite">
-                                   <span>1</span> 
-                                   </div>
-                                    
-                                </div>
+                              
+
 
                             </div>
-                           
-
                         </div>
                     </div>
+
                 </div>
-
-
 
             </div>
 

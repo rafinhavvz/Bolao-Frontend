@@ -7,9 +7,13 @@ import { Observable, Subject, catchError, map, tap, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl: string = "http://localhost:5288"
+  private baseUrl: string = "http://192.168.1.106:80/bolaoApi"
   constructor(private http: HttpClient) { }
 
+
+  getBaseUrl(): string {
+    return this.baseUrl;
+  }
   getBoloes() {
     return this.http.get<any>(this.baseUrl + "/Boloes").pipe(
       catchError(this.handleError)

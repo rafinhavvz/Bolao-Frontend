@@ -10,11 +10,13 @@
         </div>
     </div>
     <div class="header rows mt-3 flex-sm-row-reverse">
-        <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12  p-1">
-            <div class="teste">
-                <!-- barra.component.html -->
-                <div class="contarine-resultado" *ngIf="mostrarBarra" [@fadeInOut]>
-                    Resultado
+        <div class="card-info col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12  p-1">
+                <!-- CARD RESULTADO -->
+                <div class="card-palpite-p" *ngIf="mostrarBarra && bolaoselecionado.status == 'FINALIZADO'" [@fadeInOut]>
+                   
+                    <div class="card-palpite-data">
+                        <span>Resultado</span>
+                   </div>
                     <div class="row">
                         <div class="resultado-premios col-6 ">
                             <div class="premio">
@@ -93,13 +95,125 @@
 
                 </div>
 
+                 <!-- CARD RESULTADO -->
+
+
+                <!-- CARD APOSTA-->
+                 <div class="card-palpite-p" *ngIf="mostrarBarra && bolaoselecionado.status == 'ANDAMENTO'" [@fadeInOut]>
+                    <div class="card-palpite-data">
+                        <span>Rodada {{bolaoselecionado.round}}</span>
+                        <span>{{bolaoselecionado.dataInicio | date:'dd/MM'}} até {{bolaoselecionado.dataFim | date:'dd/MM'}}</span>
+                    </div>
+                    <div class="card-informe">
+                        <span class="title">{{bolaoselecionado.name}}</span>
+                        <br />
+                        <span class="title-seg">{{bolaoselecionado.idCampeonato}}</span>
+                        <div class="linha"></div>
+                        <div class="card-price d-flex">
+                            <div class="d-flex" style="flex-direction: column;"><span class="title-p">Valor</span><span
+                                    class="title-s"> {{bolaoselecionado.valor  | currency:'BRL'}}</span></div>
+                            <div class="d-flex" style="flex-direction: column;"><span class="title-p">Prêmio
+                                    Atual</span><span class="title-s">{{bolaoselecionado.premio  | currency:'BRL'}}</span></div>
+                            <div class="d-flex" style="flex-direction: column;"><span class="title-p">Acumulado</span><span
+                                    class="title-s">{{ bolaoselecionado.acumulado  | currency:'BRL'}}</span></div>
+    
+                        </div>
+                    </div>
+                    <div class="card-palpite-nav col-md-12">
+                        <ul class="nav nav-underline" id="myTab" role="tablist">
+                            <li class="col-4" role="presentation">
+                                <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                                    aria-selected="true">Seu Cupom</button>
+                            </li>
+                            <li class="col-4" role="presentation">
+                                <button class="nav-link w-100" id="lista-tab" data-bs-toggle="tab"
+                                    data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                    aria-controls="profile-tab-pane" aria-selected="false">Lista de Cupons</button>
+                            </li>
+                            <li class="col-4" role="presentation">
+                                <button class="nav-link w-100 " id="contact-tab" data-bs-toggle="tab"
+                                    data-bs-target="#contact-tab-pane" type="button" role="tab"
+                                    aria-controls="contact-tab-pane" aria-selected="false">Relatório do Acumulado</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="mt-2 tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                aria-labelledby="home-tab" tabindex="0">
+                                <h6>Seu Cupom</h6>
+                                <div class="timeno text-center" *ngIf="timeSelecionado.length == 0">
+                                    <h6>NUNHUMA PARTIDA SELECIONADA</h6>
+                                </div>
+                                <div *ngFor="let selec of timeSelecionado; let i = index">
+                                    <div class="seltime">
+                                        {{selec.home}} x {{selec.fora}}
+                                    </div>
+                                    <div class="resulttime">
+                                        {{selec.resultado}}
+                                        <button (click)="retirarTime(selec,i)"> <span
+                                                class="material-symbols-outlined">close</span></button>
+                                    </div>
+                                </div>
+                                <div class="bet-input row mt-4"  *ngIf="timeSelecionado.length > 0">
+                                    <div class="input-grup col-lg-3 col-md-3 col-sm-3 col-3">
+                                        <label for="">Cupons</label>
+                                        <div class="input-number"> 
+                                            <input class="input-cupom" type="number" min=0
+                                                [(ngModel)]="apostaFinal.qtdCupom" (ngModelChange)="digiteValor()">
+                                            <div class="input-seta">
+                                                <button (click)="incrementarValor()" class="a">
+                                                    <span class="material-symbols-outlined">
+                                                        expand_less
+                                                    </span>
+                                                </button>
+                                                <button (click)="decrementarValor()" class="b">
+                                                    <span class="material-symbols-outlined">
+                                                        expand_more
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-grup col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <label>Valor Total</label>
+                                        <div class="input-number" aria-disabled="true" >
+                                            <input class="input-cupom-text" disabled="true"  mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" [dropSpecialCharacters]="true" [(ngModel)]="apostaFinal.valorTotal" type="text">
+                                            <h6>R$</h6>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="input-grup col-lg-5 col-md-5 col-sm-5 col-5">
+                                        <label>Prêmio a Seguir </label>
+                                        <div class="input-number" aria-disabled="true">
+                                                <input class="input-cupom-text"  disabled="true" mask="separator.2"  mask="separator.2" [thousandSeparator]="'.'" [decimalMarker]="','" [dropSpecialCharacters]="true"  [(ngModel)]="apostaFinal.premioExtra" type="text">
+                                            <h6>R$</h6>
+                                        </div>
+                                    </div>
+                                    
+                                    
+    
+                                </div>
+                                <div class="btn-bet mt-2"  *ngIf="timeSelecionado.length > 0">
+                                    <button class="btn-p" (click)="finalizarBet(timeSelecionado,apostaFinal)" >PARTICIPAR</button>
+                                    <button class="btn-s" (click)="limparTimes()">
+                                       LIMPAR
+                                    </button>
+                                
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="lista-tab"
+                                tabindex="0"><app-relatorio-cupons [BolaoItem]="bolaoselecionado"></app-relatorio-cupons></div>
+                            <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
+                                tabindex="0"><app-relatorio-acumulado [BolaoItem]="bolaoselecionado"></app-relatorio-acumulado></div>
+                        </div>
+    
+                    </div>
+                </div>
+             <!-- CARD APOSTA-->
 
             </div>
-        </div>
         <div class="col-xl-7 col-lg-7 col-md-6 col-sm-12 col-12  mb-5 p-1">
-            <div class="teste2">
-
-                <div class="card-princial" *ngFor="let bolao of boloesDuplicado; let i = index"  >
+                <div class="card-princial" *ngFor="let bolao of boloes; let i = index"   [@fadeInOutWithOpacity]>
                     <div *ngIf="!indexMostrarBarra || indexMostrarBarra === bolao.id" [@fadeInOut]>
                     <div class="card" (click)="toggleBarra(bolao.id) ">
                         <div class="card-data">
@@ -111,7 +225,7 @@
                         <div class="row">
                             <div style="text-align: -webkit-center;" class="col-xl-1  col-lg-2 col-md-2 col-sm-2 col-2">
                                 <div class="card-banner ">
-                                    <img [src]="bolao.logo" alt="">
+                                    <img [src]=" baseUrl + bolao.logo" alt="">
                                 </div>
                             </div>
                             <div class="col-xl-7 col-lg-6  col-md-6 col-sm-6 col-6 ">
@@ -129,16 +243,29 @@
                                 </div>
                             </div>
 
-                            <div style="text-align: end;align-self: center;"
+                            <div style="text-align: end;align-self: center;" *ngIf="bolao.status == 'FINALIZADO'"
                                 class="col-xl-3 col-lg-3   col-md-3 col-sm-3 col-3">
                                 <div>
                                     <p class="sub-title"> Valor Pago</p>
-
                                 </div>
                                 <div>
                                     <p class="sub-title-seg">{{bolao.valorPago | currency:'BRL'}}</p>
                                 </div>
                             </div>
+                            <div  style="text-align: end;align-self: center;" *ngIf="bolao.status == 'ANDAMENTO'"
+                                class="col-xl-3 col-lg-3   col-md-3 col-sm-3 col-3">
+                                <div [@trocaPremioAcumulado]="mostrarPremio ? 'mostrarPremio' : 'esconderPremio'" >
+                                    <div class="sub-title" *ngIf="mostrarPremio">Prêmio</div>
+                                    <div class="sub-title-seg" *ngIf="mostrarPremio">{{bolao.premio | currency:'BRL'}}</div>
+                                  
+                                  
+                                  </div>
+                                  <div [@trocaPremioAcumulado]="mostrarPremio ?  'esconderPremio': 'mostrarPremio'">
+                                    <div class="sub-title" *ngIf="!mostrarPremio && bolao.acumulado !== 0">Acumulado</div>
+                                    <div class="sub-title-seg" *ngIf="!mostrarPremio && bolao.acumulado !== 0">{{bolao.acumulado | currency:'BRL'}}</div>
+                             
+                                  </div>
+                                 </div>
                             <div class="icon col-xl-1 col-lg-1  col-md-1 col-sm-1 col-1">
                                 <span class="material-symbols-outlined"
                                     [ngStyle]="{'transform': mostrarBarra && indexMostrarBarra === bolao.id ? 'rotate(180deg)' : 'rotate(0deg)', 'transition': 'transform 0.5s'}">expand_more</span>
@@ -148,7 +275,7 @@
                     </div>
                 </div>
                     <div style="text-align: -webkit-center; width: 100%;">
-                        <div class="barra" #conteudoRef [@expandeContrai]="mostrarBarra && indexMostrarBarra === bolao.id">
+                        <div class="barra" *ngIf="mostrarBarra && indexMostrarBarra === bolao.id" #conteudoRef [@fadeInOut]>
                             <div class="conteudo">
                                 <div class="row" *ngIf="mostraCupom" [@fadeInOut]>
                                     <div style="padding: 0px 10px;text-align: start;">
@@ -185,14 +312,16 @@
                                     </div>
                                 </div>
 
-                                <div *ngFor="let partida of bolao.partidas">
+                                <div *ngFor="let partida of bolao.partidas; let i = index">
                                     <div class="row mb-3">
-                                        <div class="info-time-date col-xl-2 col-lg-2 col-md-3 col-sm-2 col-3 ">
-                                            {{partida.data | date:"dd/MM/yyyy"}}
+                                        <div class="info-time-date col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 ">
+                                            {{partida.data | date:"dd/MM"}}
                                             <br>
-                                            FT
+                                           <span  *ngIf="bolao.status == 'FINALIZADO'">FT</span> 
+                                           <span  *ngIf="bolao.status == 'ANDAMENTO'">{{partida.data | date:"HH:mm"}}</span> 
                                         </div>
-                                        <div style="text-align: start;"
+                                        <!-- FINALIZADO -->
+                                        <div style="text-align: start;"  *ngIf="bolao.status == 'FINALIZADO'"
                                             class="info-time col-xl-7 col-lg-7 col-md-6 col-sm-7 col-6 "
                                             [ngClass]="{' col-xl-7 col-lg-7 col-md-6 col-sm-7 col-6': mostraCupom, ' col-xl-9 col-lg-9 col-md-8 col-sm-9 col-8': !mostraCupom}">
                                             <div class="home" [ngClass]="{'text-cinza': partida.resultHome <= partida.resultAway && partida.status == 'FINALIZADO'}">
@@ -204,12 +333,29 @@
                                             </div>
                                         </div>
     
-                                        <div class=" info-time-resultado  col-xl-1 col-lg-1 ml-lg-auto col-md-1 col-sm-1 col-1"
-                                        
-                                        >
+                                        <div class=" info-time-resultado  col-xl-1 col-lg-1 ml-lg-auto col-md-1 col-sm-1 col-2" *ngIf="bolao.status == 'FINALIZADO'">
                                             <span class="home" [ngClass]="{'text-cinza': partida.resultHome <= partida.resultAway}">{{partida.resultHome}}</span><br>
                                             <span class="away" [ngClass]="{'text-cinza': partida.resultAway <= partida.resultHome}">{{partida.resultAway}}</span>
                                         </div>
+                                        <!-- FINALIZADO -->
+                                            <!-- EM ANDAMENTO -->
+                                        <div style="text-align: start;" *ngIf="bolao.status == 'ANDAMENTO'"
+                                            class="info-time col-xl-5 col-lg-5 col-md-6 col-sm-6 col-6 ">
+                                            <div class="home" [ngClass]="{'text-cinza': partida.resultHome <= partida.resultAway && partida.status == 'FINALIZADO'}">
+                                                <img [src]="partida.timeHomeLogo" alt="">
+                                                    {{partida.timeHomeName}}</div>
+                                            <div class="away" [ngClass]="{'text-cinza': partida.resultAway <= partida.resultHome && partida.status == 'FINALIZADO'}">
+                                                <img [src]="partida.timeAwayLogo" alt="">
+                                                {{partida.timeAwayName}}
+                                            </div>
+                                        </div>
+                                        <div class="card-bet col-xl-5 col-lg-5 col-md-4 col-sm-4 col-4" role="presentation"  *ngIf="bolao.status == 'ANDAMENTO'">
+                                            <button  [ngStyle]="botaoAtivoIndex[i] === 0 ? { 'background-color': '#044793', 'color': 'white' } : {}"  (click)="apostaTeam(partida.timeHomeName, i, 0,partida.idBolao)">1</button>
+                                            <button  [ngStyle]="botaoAtivoIndex[i] === 1 ? { 'background-color': '#044793', 'color': 'white' } : {}" (click)="apostaTeam('Empate', i, 1,partida.idBolao)">X</button>
+                                            <button  [ngStyle]="botaoAtivoIndex[i] === 2 ? { 'background-color': '#044793', 'color': 'white' } : {}" (click)="apostaTeam(partida.timeAwayName, i, 2,partida.idBolao)">2</button>
+                
+                                        </div>
+                                            <!-- EM ANDAMENTO -->
                                         <div class="info-time-palpite col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2" 
                                        
                                         *ngIf="mostraCupom">
@@ -235,7 +381,6 @@
 
             </div>
 
-        </div>
 
     </div>
 
